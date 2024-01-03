@@ -1,0 +1,18 @@
+package DAL;
+
+import BE.CatMovie;
+import BE.Category;
+
+import java.util.List;
+
+public interface ICatMovieDataAccess {
+    public List<CatMovie> getAll() throws Exception;
+
+    public CatMovie create(CatMovie catMovie) throws Exception;
+
+    public void update(CatMovie catMovie) throws Exception;
+
+    public void delete(CatMovie catMovie) throws Exception;
+
+    public CatMovie getById(int catMovieId) throws Exception;
+}
