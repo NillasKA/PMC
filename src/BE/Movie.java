@@ -56,6 +56,13 @@ public class Movie {
 
     //TODO Implement safety measure
     private void setLastview(String lastview) {
+        /* ROUGH PSUDO CODE OF WHAT I WANT
+        this.lastview = "never"
+
+        if (hasBeenPlayed) {
+            this.lastview = currentDate
+        }
+         */
         this.lastview = lastview;
     }
 
