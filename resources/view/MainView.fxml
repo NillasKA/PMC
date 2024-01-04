@@ -9,9 +9,9 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
 
-
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.MainViewController">
    <top>
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
@@ -34,35 +34,30 @@
       </MenuBar>
    </top>
    <left>
-      <TableView prefHeight="575.0" prefWidth="209.0" BorderPane.alignment="CENTER">
-        <columns>
-          <TableColumn prefWidth="147.0" text="Categories" />
-          <TableColumn minWidth="1.0" prefWidth="57.0" text="Movies" />
-        </columns>
-      </TableView>
-   </left>
-   <bottom>
-      <HBox prefHeight="61.0" prefWidth="900.0" BorderPane.alignment="CENTER">
+      <VBox prefHeight="514.0" prefWidth="220.0" BorderPane.alignment="CENTER">
          <children>
-            <Pane prefHeight="61.0" prefWidth="159.0">
+            <Button mnemonicParsing="false" onAction="#clickBrowse" prefHeight="70.0" prefWidth="220.0" text="Browse" />
+            <TableView prefHeight="474.0" prefWidth="220.0">
+              <columns>
+                <TableColumn prefWidth="147.0" text="Categories" />
+                <TableColumn minWidth="1.0" prefWidth="57.0" text="Movies" />
+              </columns>
+            </TableView>
+            <HBox prefHeight="60.0" prefWidth="220.0">
                <children>
-                  <Button layoutX="35.0" layoutY="11.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="80.0" text="Button" />
+                  <Pane prefHeight="94.0" prefWidth="110.0">
+                     <children>
+                        <Button mnemonicParsing="false" onAction="#clickCreate" prefHeight="50.0" prefWidth="110.0" text="Create" />
+                     </children>
+                  </Pane>
+                  <Pane prefHeight="94.0" prefWidth="110.0">
+                     <children>
+                        <Button mnemonicParsing="false" onAction="#clickDelete" prefHeight="50.0" prefWidth="110.0" text="Delete" />
+                     </children>
+                  </Pane>
                </children>
-            </Pane>
-            <Pane prefHeight="61.0" prefWidth="159.0">
-               <children>
-                  <Button layoutX="35.0" layoutY="11.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="80.0" text="Button" />
-               </children>
-            </Pane>
-            <Pane prefHeight="61.0" prefWidth="159.0">
-               <children>
-                  <Button layoutX="35.0" layoutY="11.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="80.0" text="Button" />
-               </children>
-            </Pane>
-            <Pane prefHeight="61.0" prefWidth="159.0" />
-            <Pane prefHeight="61.0" prefWidth="159.0" />
-            <Pane prefHeight="61.0" prefWidth="159.0" />
+            </HBox>
          </children>
-      </HBox>
-   </bottom>
+      </VBox>
+   </left>
 </BorderPane>

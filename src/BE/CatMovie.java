@@ -5,6 +5,11 @@ public class CatMovie {
     private int categoryId;
     private int movieId;
 
+    /**
+     * Connection between movie and multiple categories.
+     * @param categoryId - Id of the given category.
+     * @param movieId - Id of the movie.
+     */
     public CatMovie(int categoryId, int movieId)
     {
         this.categoryId = categoryId;

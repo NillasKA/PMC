@@ -7,11 +7,25 @@ public class Movie {
     private double rating;
     private int id;
 
+    /**
+     * Creates a movie based on the given parameters.
+     * @param id - Set this to -1 as default. DB will figure it out
+     * @param name - Name of the movie.
+     * @param rating - Movies IMDB rating. Perhaps personal rating in the future
+     * @param filelink - Filepath of the movie. Data/movies/xxxx
+     * @param lastview - Last time the movie was viewed. Check comment in constructor
+     */
     public Movie(int id, String name, double rating, String filelink, String lastview){
         this.id = id;
         setName(name);
         setRating(rating);
         setFilelink(filelink);
+        /*
+        An idea we can implement.
+        Lastview is default to "never" - Then when user clicks "play" in our program it
+        sets the lastview to the current date. Limitations are of course if the user put in the movie
+        a few days after they watched it, it wouldnt be accurate.
+         */
         setLastview(lastview);
     }
 

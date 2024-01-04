@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="315.0" prefWidth="296.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.CreateCategoryController">
+   <top>
+      <HBox prefHeight="50.0" prefWidth="450.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label alignment="CENTER" prefHeight="59.0" prefWidth="450.0" text="Category Creation" />
+         </children>
+      </HBox>
+   </top>
+   <bottom>
+      <HBox prefHeight="65.0" prefWidth="450.0" BorderPane.alignment="CENTER">
+         <children>
+            <Pane prefHeight="200.0" prefWidth="225.0">
+               <children>
+                  <Button layoutX="24.0" layoutY="13.0" mnemonicParsing="false" onAction="#clickCreate" prefHeight="40.0" prefWidth="100.0" text="Create" />
+               </children>
+            </Pane>
+            <Pane prefHeight="200.0" prefWidth="225.0">
+               <children>
+                  <Button layoutX="24.0" layoutY="13.0" mnemonicParsing="false" onAction="#clickCancel" prefHeight="40.0" prefWidth="100.0" text="Cancel" />
+               </children>
+            </Pane>
+         </children>
+      </HBox>
+   </bottom>
+   <center>
+      <GridPane prefHeight="185.0" prefWidth="296.0" BorderPane.alignment="CENTER">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="321.0" minWidth="10.0" prefWidth="299.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="144.0" minHeight="10.0" prefHeight="81.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="119.0" minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <TextField fx:id="txtName" prefHeight="28.0" prefWidth="439.0" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets left="20.0" right="20.0" />
+               </GridPane.margin>
+            </TextField>
+            <Label alignment="CENTER" prefHeight="45.0" prefWidth="296.0" text="Category Name">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+         </children>
+      </GridPane>
+   </center>
+</BorderPane>
