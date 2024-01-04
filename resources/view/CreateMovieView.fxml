@@ -97,7 +97,7 @@
             </Label>
             <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
                <children>
-                  <Button layoutX="20.0" layoutY="14.0" mnemonicParsing="false" onAction="#clickMovieFile" prefHeight="28.0" prefWidth="108.0" text="Add movie" />
+                  <Button fx:id="btnFilePath" layoutX="20.0" layoutY="14.0" mnemonicParsing="false" onAction="#clickMovieFile" prefHeight="28.0" prefWidth="108.0" text="Add movie" />
                </children>
             </Pane>
             <Label fx:id="lblLastViewed" alignment="CENTER" prefHeight="45.0" prefWidth="296.0" text="Last Viewed" GridPane.columnIndex="2" GridPane.rowIndex="3">
