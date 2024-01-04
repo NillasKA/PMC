@@ -2,6 +2,8 @@ package GUI.Model;
 
 import BE.Movie;
 import BLL.MovieManager;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import java.util.List;
 
@@ -9,8 +11,12 @@ public class MovieModel {
     private static MovieModel instance;
     private MovieManager movieManager;
 
+    private ObservableList<Movie> allMovies;
+
     public MovieModel() throws Exception {
         movieManager = new MovieManager();
+        allMovies = FXCollections.observableArrayList();
+        allMovies.addAll(movieManager.getAll());
     }
 
     public static MovieModel getInstance() throws Exception {
@@ -19,6 +25,11 @@ public class MovieModel {
             instance = new MovieModel();
         }
         return instance;
+    }
+
+    public ObservableList<Movie> getObservableMovies()
+    {
+        return allMovies;
     }
 
     public List<Movie> getAll() throws Exception {
@@ -40,8 +51,8 @@ public class MovieModel {
     public void searchMovie(String query) throws Exception
     {
         List<Movie> searchResults = movieManager.searchMovie(query);
-        //allmovies.clear();
-        //allmovies.addAll(searchResults)
+        allMovies.clear();
+        allMovies.addAll(searchResults);
     }
 
     //TODO FIRST IMPLEMENT IN MOVIEMANAGER THEN HERE
