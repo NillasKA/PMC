@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.CategoryViewController">
+   <children>
+      <TableView layoutX="-1.0" layoutY="-3.0" prefHeight="351.0" prefWidth="600.0">
+        <columns>
+          <TableColumn fx:id="tblRating" prefWidth="75.0" text="Rating" />
+          <TableColumn fx:id="tblName" prefWidth="262.0" text="Name" />
+            <TableColumn fx:id="tblLastViewed" prefWidth="123.0" text="Last Viewed" />
+            <TableColumn fx:id="tblFilelink" prefWidth="136.0" text="File Path" />
+        </columns>
+      </TableView>
+      <Button layoutX="17.0" layoutY="354.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="59.0" text="Button" />
+      <Button layoutX="97.0" layoutY="354.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="59.0" text="Button" />
+      <Button layoutX="181.0" layoutY="354.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="59.0" text="Button" />
+   </children>
+</AnchorPane>
