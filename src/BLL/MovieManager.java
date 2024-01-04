@@ -1,12 +1,14 @@
 package BLL;
 
 import BE.Movie;
+import BLL.util.MovieSearcher;
 import DAL.Dao.MovieDAO;
 import DAL.IMovieDataAccess;
 
 import java.util.List;
 
 public class MovieManager {
+    private MovieSearcher movieSearcher = new MovieSearcher();
     private IMovieDataAccess movieDAO;
     public MovieManager() throws Exception {
         movieDAO = new MovieDAO();
@@ -26,6 +28,13 @@ public class MovieManager {
 
     public void delete(Movie movie) throws Exception {
         movieDAO.delete(movie);
+    }
+
+    public List<Movie> searchMovie(String query) throws Exception
+    {
+        List<Movie> allMovies = getAll();
+        List<Movie> searchResult = movieSearcher.search(allMovies, query);
+        return searchResult;
     }
 
     //TODO FIRST IMPLEMENT IN MOVIEDAO THEN HERE

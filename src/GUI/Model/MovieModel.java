@@ -37,6 +37,13 @@ public class MovieModel {
         movieManager.delete(movie);
     }
 
+    public void searchMovie(String query) throws Exception
+    {
+        List<Movie> searchResults = movieManager.searchMovie(query);
+        //allmovies.clear();
+        //allmovies.addAll(searchResults)
+    }
+
     //TODO FIRST IMPLEMENT IN MOVIEMANAGER THEN HERE
     public List<Movie> getByCatId(int catId) {
         return null;
