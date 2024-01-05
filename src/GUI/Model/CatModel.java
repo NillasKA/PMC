@@ -2,6 +2,8 @@ package GUI.Model;
 
 import BE.Category;
 import BLL.CatManager;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import java.util.List;
 
@@ -9,8 +11,12 @@ public class CatModel {
     private static CatModel instance;
     private CatManager catManager;
 
+    private ObservableList<Category> allCategories;
+
     public CatModel() throws Exception {
         catManager = new CatManager();
+        allCategories = FXCollections.observableArrayList();
+        allCategories.addAll(catManager.getAll());
     }
 
     public static CatModel getInstance() throws Exception {
@@ -19,6 +25,11 @@ public class CatModel {
             instance = new CatModel();
         }
         return instance;
+    }
+
+    public ObservableList<Category> getObservableCategories()
+    {
+        return allCategories;
     }
 
     public List<Category> getAll() throws Exception {

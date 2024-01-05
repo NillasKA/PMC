@@ -37,10 +37,10 @@
       <VBox prefHeight="514.0" prefWidth="220.0" BorderPane.alignment="CENTER">
          <children>
             <Button mnemonicParsing="false" onAction="#clickBrowse" prefHeight="70.0" prefWidth="220.0" text="Browse" />
-            <TableView prefHeight="474.0" prefWidth="220.0">
+            <TableView fx:id="tblCategories" prefHeight="474.0" prefWidth="220.0">
               <columns>
-                <TableColumn prefWidth="147.0" text="Categories" />
-                <TableColumn minWidth="1.0" prefWidth="57.0" text="Movies" />
+                <TableColumn fx:id="colCategories" prefWidth="147.0" text="Categories" />
+                <TableColumn fx:id="colMovies" minWidth="1.0" prefWidth="57.0" text="Movies" />
               </columns>
             </TableView>
             <HBox prefHeight="60.0" prefWidth="220.0">
