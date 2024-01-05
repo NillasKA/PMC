@@ -25,6 +25,11 @@ public class CatMovieModel {
         return catMovieManager.getAll();
     }
 
+    public int getMoviesCountForCategory(int categoryId) throws Exception
+    {
+        return catMovieManager.getMoviesCountForCategory(categoryId);
+    }
+
     public CatMovie create(CatMovie catMovie) throws Exception {
         return catMovieManager.create(catMovie);
     }

@@ -15,4 +15,6 @@ public interface ICatMovieDataAccess {
     public void delete(CatMovie catMovie) throws Exception;
 
     public CatMovie getById(int catMovieId) throws Exception;
+
+    public int getMoviesCountForCategory(int categoryId) throws Exception;
 }

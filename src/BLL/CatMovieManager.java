@@ -34,4 +34,9 @@ public class CatMovieManager {
     public CatMovie getById(int catMovieId) throws Exception {
         return catMovieDAO.getById(catMovieId);
     }
+
+    public int getMoviesCountForCategory(int categoryId) throws Exception
+    {
+        return catMovieDAO.getMoviesCountForCategory(categoryId);
+    }
 }

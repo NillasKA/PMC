@@ -4,6 +4,8 @@ import GUI.Model.CatModel;
 import GUI.Model.CatMovieModel;
 import GUI.Model.MovieModel;
 import BE.Category;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,6 +18,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 import java.io.IOException;
 import java.net.URL;
@@ -85,6 +88,23 @@ public class MainViewController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         tblCategories.setItems(catModel.getObservableCategories());
         colCategories.setCellValueFactory(new PropertyValueFactory<>("name"));
+
+        colMovies.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Category, String>, ObservableValue<String>>() {
+            @Override
+            public ObservableValue<String> call(TableColumn.CellDataFeatures<Category, String> param) {
+                Category category = param.getValue();
+                int movieCount = 0;
+
+                try {
+                    movieCount = catMovieModel.getMoviesCountForCategory(category.getId());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                return new SimpleStringProperty(String.valueOf(movieCount));
+            }
+        });
+
         tblCategories.setEditable(true);
     }
 }

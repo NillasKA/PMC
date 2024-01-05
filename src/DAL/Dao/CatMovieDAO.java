@@ -45,6 +45,29 @@ public class CatMovieDAO implements ICatMovieDataAccess {
         }
     }
 
+    public int getMoviesCountForCategory(int categoryId) throws Exception
+    {
+        String sql = "SELECT COUNT(*) FROM dbo.CatMovie WHERE CategoryId = ?";
+        try(Connection conn = dbConnector.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql))
+        {
+            stmt.setInt(1, categoryId);
+            ResultSet rs = stmt.executeQuery();
+
+            if(rs.next())
+            {
+                return rs.getInt(1);
+            }
+
+            return 0;
+        }
+        catch (SQLException ex)
+        {
+            ex.printStackTrace();
+            throw new Exception("Could not get moviecount");
+        }
+    }
+
     @Override
     public CatMovie create(CatMovie catMovie) throws SQLServerException {
         String sql = "INSERT INTO dbo.CatMovie (CategoryId, MovieId) VALUES (?,?);";
