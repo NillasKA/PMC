@@ -11,7 +11,6 @@ public class MovieModel {
     private Movie currentMovie;
     private static MovieModel instance;
     private MovieManager movieManager;
-
     private ObservableList<Movie> allMovies;
 
     public MovieModel() throws Exception {
@@ -56,9 +55,8 @@ public class MovieModel {
         allMovies.addAll(searchResults);
     }
 
-    //TODO FIRST IMPLEMENT IN MOVIEMANAGER THEN HERE
-    public List<Movie> getByCatId(int catId) {
-        return null;
+    public List<Movie> getByCatId(int catId) throws Exception {
+        return movieManager.getByCatId(catId);
     }
 
     public Movie getById(int movieId) throws Exception {

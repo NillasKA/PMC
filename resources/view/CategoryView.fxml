@@ -5,19 +5,19 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.CategoryViewController">
-   <children>
-      <TableView layoutX="-1.0" layoutY="-3.0" prefHeight="351.0" prefWidth="600.0">
-        <columns>
-          <TableColumn fx:id="tblRating" prefWidth="75.0" text="Rating" />
-          <TableColumn fx:id="tblName" prefWidth="262.0" text="Name" />
-            <TableColumn fx:id="tblLastViewed" prefWidth="123.0" text="Last Viewed" />
-            <TableColumn fx:id="tblFilelink" prefWidth="136.0" text="File Path" />
-        </columns>
-      </TableView>
-      <Button layoutX="17.0" layoutY="354.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="59.0" text="Button" />
-      <Button layoutX="97.0" layoutY="354.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="59.0" text="Button" />
-      <Button layoutX="181.0" layoutY="354.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="59.0" text="Button" />
-   </children>
+<AnchorPane prefHeight="579.0" prefWidth="678.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.CategoryViewController">
+    <children>
+        <TableView fx:id="tblMovies" layoutY="-1.0" onMouseClicked="#setMovie" prefHeight="521.0" prefWidth="678.0">
+            <columns>
+                <TableColumn fx:id="colRating" prefWidth="75.0" text="Rating" />
+                <TableColumn fx:id="colName" prefWidth="356.0" text="Name" />
+                <TableColumn fx:id="colLastViewed" prefWidth="102.0" text="Last Viewed" />
+                <TableColumn fx:id="colFilelink" prefWidth="142.0" text="File Path" />
+            </columns>
+        </TableView>
+        <Button layoutX="14.0" layoutY="533.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="59.0" text="Create" />
+        <Button layoutX="270.0" layoutY="533.0" mnemonicParsing="false" onAction="#clickPlay" prefHeight="32.0" prefWidth="59.0" text="Play" />
+        <Button layoutX="527.0" layoutY="533.0" mnemonicParsing="false" onAction="#clickDelete" prefHeight="32.0" prefWidth="59.0" text="Delete" />
+        <Button layoutX="86.0" layoutY="533.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="116.0" text="Add to Category" />
+    </children>
 </AnchorPane>

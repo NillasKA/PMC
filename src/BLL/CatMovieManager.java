@@ -2,6 +2,7 @@ package BLL;
 
 
 import BE.CatMovie;
+import BE.Movie;
 import DAL.Dao.CatMovieDAO;
 import DAL.ICatMovieDataAccess;
 
@@ -38,5 +39,9 @@ public class CatMovieManager {
     public int getMoviesCountForCategory(int categoryId) throws Exception
     {
         return catMovieDAO.getMoviesCountForCategory(categoryId);
+    }
+
+    public List<Movie> getMovieByCatId(int catId) throws Exception {
+        return catMovieDAO.getMovieByCatId(catId);
     }
 }

@@ -63,6 +63,24 @@ public class MainViewController implements Initializable {
         }
     }
 
+    public void clickCategory(MouseEvent mouseEvent) {
+        try {
+            //Sets the selected category to the model.
+            catModel.setCategory(tblCategories.getSelectionModel().getSelectedItem());
+            catMovieModel.setCategory(tblCategories.getSelectionModel().getSelectedItem());
+            catMovieModel.initCurrentCat();
+
+            //Loads the movies in the category.
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/CategoryView.fxml"));
+            Parent p = loader.load();
+            CategoryViewController categoryViewController = loader.getController();
+            AnchorPane view = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/CategoryView.fxml")));
+            borderPane.setCenter(view);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public void clickCreate(ActionEvent actionEvent) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/CreateCategoryView.fxml"));
@@ -107,9 +125,5 @@ public class MainViewController implements Initializable {
         });
 
         tblCategories.setEditable(true);
-    }
-
-    public void setCategory(MouseEvent mouseEvent) {
-        catModel.setCategory(tblCategories.getSelectionModel().getSelectedItem());
     }
 }

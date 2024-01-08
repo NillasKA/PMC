@@ -2,6 +2,7 @@ package DAL;
 
 import BE.CatMovie;
 import BE.Category;
+import BE.Movie;
 
 import java.util.List;
 
@@ -17,4 +18,6 @@ public interface ICatMovieDataAccess {
     public CatMovie getById(int catMovieId) throws Exception;
 
     public int getMoviesCountForCategory(int categoryId) throws Exception;
+
+    List<Movie> getMovieByCatId(int catId) throws Exception;
 }

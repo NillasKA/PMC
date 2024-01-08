@@ -38,8 +38,8 @@ public class MovieManager {
     }
 
     //TODO FIRST IMPLEMENT IN MOVIEDAO THEN HERE
-    public List<Movie> getByCatId(int catId){
-        return null;
+    public List<Movie> getByCatId(int catId) throws Exception {
+        return movieDAO.getByCatId(catId);
     }
 
     public Movie getById(int movieId) throws Exception {

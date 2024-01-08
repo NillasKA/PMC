@@ -1,6 +1,7 @@
 package DAL.Dao;
 
 import BE.CatMovie;
+import BE.Movie;
 import DAL.DatabaseConnector;
 import DAL.ICatMovieDataAccess;
 import com.microsoft.sqlserver.jdbc.SQLServerException;
@@ -135,5 +136,32 @@ public class CatMovieDAO implements ICatMovieDataAccess {
     @Override
     public CatMovie getById(int catMovieId) throws Exception {
         return null;
+    }
+
+    @Override
+    public List<Movie> getMovieByCatId(int catId) throws Exception {
+        List<Movie> movies = new ArrayList<>();
+        String sql = "SELECT Movie.* FROM dbo.Movie " + "JOIN CatMovie ON Movie.Id = CatMovie.MovieId " + "WHERE CatMovie.CategoryId = ?;";
+        try(Connection conn = dbConnector.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql))
+        {
+            stmt.setInt(1, catId);
+
+            try (ResultSet rs = stmt.executeQuery())
+            {
+                while(rs.next())
+                {
+                    int id = rs.getInt("Id");
+                    String name = rs.getString("Name");
+                    double rating = rs.getDouble("Rating");
+                    String filelink = rs.getString("Filelink");
+                    String lastview = rs.getString("Lastview");
+
+                    Movie movie = new Movie(id, name, rating, filelink, lastview);
+                    movies.add(movie);
+                }
+            }
+        }
+        return movies;
     }
 }
