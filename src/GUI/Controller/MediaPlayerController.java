@@ -2,6 +2,9 @@ package GUI.Controller;
 
 import BE.Movie;
 import GUI.Model.MovieModel;
+import javafx.application.Platform;
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -25,6 +28,7 @@ import java.util.ResourceBundle;
 
 
 public class MediaPlayerController implements Initializable {
+    @FXML Slider volumeSlider;
     private MovieModel movieModel;
     @FXML
     private Button btnPlay;
@@ -145,13 +149,20 @@ public class MediaPlayerController implements Initializable {
                 slider.setMax(totalDuration.toSeconds());
                 lblDuration.setText("Duration: 00 / " + (int)media.getDuration().toSeconds());
             });
+            volumeSlider.setValue(mediaPlayer.getVolume() * 100); // Set slider value based on initial volume
+            volumeSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
+                mediaPlayer.setVolume(newValue.doubleValue() / 100); // Set volume based on slider value
+            });
 
-            Scene scene = mediaView.getScene();
-            mediaView.fitWidthProperty().bind(scene.widthProperty());
-            mediaView.fitWidthProperty().bind(scene.heightProperty());
+            Platform.runLater(() -> {
+                Stage stage = (Stage) mediaView.getScene().getWindow();
 
-            //mediaPlayer.setAutoPlay(true);
-
+                stage.setOnCloseRequest(event -> {
+                    if (mediaPlayer != null) {
+                        mediaPlayer.stop();
+                    }
+                });
+            });
         }
     }
     }

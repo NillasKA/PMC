@@ -31,6 +31,7 @@
                   <Button fx:id="btnPlay" mnemonicParsing="false" onMouseClicked="#btnPlay" text="Play" />
                   <Button mnemonicParsing="false" onMouseClicked="#btnStop" text="Stop" />
                   <Label fx:id="lblDuration" text="Duration 00 / 00 " />
+                  <Slider fx:id="volumeSlider" />
                </children>
             </HBox>
          </children>
