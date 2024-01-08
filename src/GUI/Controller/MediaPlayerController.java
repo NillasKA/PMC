@@ -13,6 +13,7 @@ import javafx.scene.control.Slider;
 import javafx.scene.input.MouseEvent;
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -28,6 +29,7 @@ import java.util.ResourceBundle;
 
 
 public class MediaPlayerController implements Initializable {
+    public BorderPane borderPane;
     @FXML Slider volumeSlider;
     private MovieModel movieModel;
     @FXML
@@ -153,6 +155,13 @@ public class MediaPlayerController implements Initializable {
             volumeSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
                 mediaPlayer.setVolume(newValue.doubleValue() / 100); // Set volume based on slider value
             });
+            BorderPane borderPane = (BorderPane) mediaView.getParent();
+
+            if (mediaView.getScene() != null) {
+                // Bind the dimensions of the MediaView to its parent (scene) dimensions
+                mediaView.fitWidthProperty().bind(mediaView.getScene().widthProperty());
+                mediaView.fitHeightProperty().bind(mediaView.getScene().heightProperty());
+            }
 
             Platform.runLater(() -> {
                 Stage stage = (Stage) mediaView.getScene().getWindow();
@@ -165,5 +174,10 @@ public class MediaPlayerController implements Initializable {
             });
         }
     }
+
+    public void toggleFullscreen(ActionEvent actionEvent) {
+        Stage stage = (Stage) mediaView.getScene().getWindow();
+        stage.setFullScreen(!stage.isFullScreen());
     }
+}
 
