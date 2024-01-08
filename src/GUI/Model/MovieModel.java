@@ -8,6 +8,7 @@ import javafx.collections.ObservableList;
 import java.util.List;
 
 public class MovieModel {
+    private Movie currentMovie;
     private static MovieModel instance;
     private MovieManager movieManager;
 
@@ -62,5 +63,12 @@ public class MovieModel {
 
     public Movie getById(int movieId) throws Exception {
         return movieManager.getById(movieId);
+    }
+
+    public void setMovie(Movie movie){
+        this.currentMovie = movie;
+    }
+    public Movie getCurrentMovie(){
+        return currentMovie;
     }
 }

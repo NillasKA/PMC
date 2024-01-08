@@ -10,6 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.SelectionModel;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -76,7 +77,22 @@ public class BrowseViewController implements Initializable {
     }
 
     public void clickPlay(ActionEvent actionEvent) {
-        //Selection model on movie selected in tableview.
+        try {
+            movieModel.setMovie(tblMovies.getSelectionModel().getSelectedItem());
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/PlayMovie.fxml"));
+            Parent newWindow = loader.load();
+            Stage stage = new Stage();
+            stage.setTitle("MediaPlayer");
+            stage.setScene(new Scene(newWindow));
+
+            MediaPlayerController controller = loader.getController();
+            controller.setParentController(this);
+            controller.setStage(stage);
+            stage.showAndWait();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

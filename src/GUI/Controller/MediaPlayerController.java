@@ -1,6 +1,11 @@
 package GUI.Controller;
 
+import BE.Movie;
+import GUI.Model.MovieModel;
 import javafx.event.ActionEvent;
+import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.input.MouseEvent;
 import javafx.application.Application;
@@ -12,14 +17,15 @@ import javafx.scene.media.MediaView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.fxml.FXML;
+import javafx.util.Duration;
 
-import java.awt.*;
 import java.io.File;
-import java.time.Duration;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 
-public class MediaPlayerController {
-
+public class MediaPlayerController implements Initializable {
+    private MovieModel movieModel;
     @FXML
     private Button btnPlay;
 
@@ -30,16 +36,24 @@ public class MediaPlayerController {
     private MediaView mediaView;
     @FXML
     private Slider slider;
-
+    BrowseViewController parentController;
+    private Stage stage;
     @FXML
     private Media media;
     private MediaPlayer mediaPlayer;
 
     private boolean isPlayed = false;
+    public MediaPlayerController(){
+        try {
+            movieModel = MovieModel.getInstance();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     @FXML
     void selectMedia(ActionEvent actionEvent) {
-        FileChooser fileChooser = new FileChooser();
+        /*FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Select Media");
         File selectedFile = fileChooser.showOpenDialog(null);
 
@@ -62,14 +76,19 @@ public class MediaPlayerController {
                 lblDuration.setText("Duration: 00 / " + (int)media.getDuration().toSeconds());
             });
 
-            Scene scene = new mediaView.getScene();
+            Scene scene = mediaView.getScene();
             mediaView.fitWidthProperty().bind(scene.widthProperty());
             mediaView.fitWidthProperty().bind(scene.heightProperty());
 
             //mediaPlayer.setAutoPlay(true);
 
+
         }
+
+         */
     }
+
+
     @FXML
     void btnPlay(MouseEvent mouseEvent) {
 
@@ -93,4 +112,47 @@ public class MediaPlayerController {
     private void sliderPressed(MouseEvent event){
         mediaPlayer.seek(Duration.seconds(slider.getValue()));
     }
-}
+
+    public void setParentController(BrowseViewController parentController) {
+        this.parentController = parentController;
+    }
+
+    public void setStage(Stage stage) {
+        this.stage = stage;
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        Movie movie = movieModel.getCurrentMovie();
+        File selectedFile = new File(movie.getFilelink());
+
+
+        if(selectedFile != null){
+            String url = selectedFile.toURI().toString();
+
+            media = new Media(url);
+            mediaPlayer = new MediaPlayer(media);
+
+            mediaView.setMediaPlayer(mediaPlayer);
+
+            mediaPlayer.currentTimeProperty().addListener(((observable, oldValue, newValue) -> {
+                slider.setValue(newValue.toSeconds());
+                lblDuration.setText("Duration: " + (int) slider.getValue() + " / " + (int)media.getDuration().toSeconds());
+            }));
+
+            mediaPlayer.setOnReady(() ->{
+                javafx.util.Duration totalDuration = media.getDuration();
+                slider.setMax(totalDuration.toSeconds());
+                lblDuration.setText("Duration: 00 / " + (int)media.getDuration().toSeconds());
+            });
+
+            Scene scene = mediaView.getScene();
+            mediaView.fitWidthProperty().bind(scene.widthProperty());
+            mediaView.fitWidthProperty().bind(scene.heightProperty());
+
+            //mediaPlayer.setAutoPlay(true);
+
+        }
+    }
+    }
+
