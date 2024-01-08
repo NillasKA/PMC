@@ -1,5 +1,6 @@
 package GUI.Controller;
 
+import BE.CatMovie;
 import BE.Movie;
 import GUI.Model.CatModel;
 import GUI.Model.CatMovieModel;
@@ -10,11 +11,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.SelectionModel;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -55,6 +55,16 @@ public class BrowseViewController implements Initializable {
         }
     }
 
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        tblMovies.setItems(movieModel.getObservableMovies());
+        colRating.setCellValueFactory(new PropertyValueFactory<>("rating"));
+        colName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        //colLastViewed.setCellValueFactory(new PropertyValueFactory<>("lastviewed"));
+        colFileLink.setCellValueFactory(new PropertyValueFactory<>("filelink"));
+        tblMovies.setEditable(true);
+    }
+
     public void clickCreate(ActionEvent actionEvent) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/CreateMovieView.fxml"));
@@ -73,13 +83,26 @@ public class BrowseViewController implements Initializable {
     }
 
     public void clickDelete(ActionEvent actionEvent) {
-        //Selection model on movie selected in tableview.
+        try {
+            movieModel.delete(movieModel.getCurrentMovie());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void clickAddToCat(ActionEvent actionEvent) {
+        try {
+            //Gets the current movie and category, and retrieves their id's.
+            CatMovie catMovie = new CatMovie(catModel.getCategory().getId(),
+                    movieModel.getCurrentMovie().getId());
+            catMovieModel.create(catMovie);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void clickPlay(ActionEvent actionEvent) {
         try {
-            movieModel.setMovie(tblMovies.getSelectionModel().getSelectedItem());
-
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/PlayMovie.fxml"));
             Parent newWindow = loader.load();
             Stage stage = new Stage();
@@ -95,16 +118,8 @@ public class BrowseViewController implements Initializable {
         }
     }
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        tblMovies.setItems(movieModel.getObservableMovies());
-        colRating.setCellValueFactory(new PropertyValueFactory<>("rating"));
-        colName.setCellValueFactory(new PropertyValueFactory<>("name"));
-        //colLastViewed.setCellValueFactory(new PropertyValueFactory<>("lastviewed"));
-        colFileLink.setCellValueFactory(new PropertyValueFactory<>("filelink"));
-
-        tblMovies.setEditable(true);
-
-
+    public void setMovie(MouseEvent mouseEvent) {
+        movieModel.setMovie(tblMovies.getSelectionModel().getSelectedItem());
     }
+
 }

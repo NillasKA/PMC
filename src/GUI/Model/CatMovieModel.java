@@ -1,6 +1,7 @@
 package GUI.Model;
 
 import BE.CatMovie;
+import BE.Category;
 import BLL.CatMovieManager;
 
 import java.util.List;

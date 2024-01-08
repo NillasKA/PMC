@@ -12,6 +12,7 @@ public class CatModel {
     private CatManager catManager;
 
     private ObservableList<Category> allCategories;
+    private Category currentCat;
 
     public CatModel() throws Exception {
         catManager = new CatManager();
@@ -50,5 +51,13 @@ public class CatModel {
 
     public Category getById(int catId) throws Exception {
         return catManager.getById(catId);
+    }
+
+    public void setCategory(Category currentCat){
+        this.currentCat = currentCat;
+    }
+
+    public Category getCategory(){
+        return currentCat;
     }
 }

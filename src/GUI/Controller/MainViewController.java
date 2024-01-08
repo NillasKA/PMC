@@ -15,6 +15,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
@@ -106,5 +107,9 @@ public class MainViewController implements Initializable {
         });
 
         tblCategories.setEditable(true);
+    }
+
+    public void setCategory(MouseEvent mouseEvent) {
+        catModel.setCategory(tblCategories.getSelectionModel().getSelectedItem());
     }
 }
