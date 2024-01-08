@@ -6,3 +6,7 @@
 # Datasource local storage ignored files
 /dataSources/
 /dataSources.local.xml
+Server=10.176.111.34
+Database=PMC_gerk
+User=CSe2023a_e_8
+Password=CSe2023aE8#23
