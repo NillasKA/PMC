@@ -12,6 +12,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import utility.PMCException;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -31,7 +32,7 @@ public class CategoryViewController implements Initializable {
     @FXML
     private TableColumn<Movie, String> colFileLink = new TableColumn<>();
 
-    public CategoryViewController(){
+    public CategoryViewController() throws PMCException {
         try {
             movieModel = MovieModel.getInstance();
             catMovieModel = CatMovieModel.getInstance();
@@ -39,12 +40,12 @@ public class CategoryViewController implements Initializable {
 
 
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new PMCException("Could not fetch model instances",e);
         }
     }
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public void initialize(URL location, ResourceBundle resources){
         try {
             tblMovies.setItems(catMovieModel.getObservableCatMovies(catModel.getCategory().getId()));
             colRating.setCellValueFactory(new PropertyValueFactory<>("rating"));
@@ -53,7 +54,7 @@ public class CategoryViewController implements Initializable {
             colFileLink.setCellValueFactory(new PropertyValueFactory<>("filelink"));
             tblMovies.setEditable(true);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
     }
 
@@ -63,13 +64,13 @@ public class CategoryViewController implements Initializable {
     public void clickPlay(ActionEvent actionEvent) {
     }
 
-    public void clickDelete(ActionEvent actionEvent) {
+    public void clickDelete(ActionEvent actionEvent) throws PMCException {
         try {
             Movie movie = tblMovies.getSelectionModel().getSelectedItem();
             CatMovie catMovie = new CatMovie(catModel.getCategory().getId(), movie.getId());
             catMovieModel.delete(catMovie);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new PMCException(e);
         }
     }
 }

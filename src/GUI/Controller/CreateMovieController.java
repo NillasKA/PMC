@@ -15,6 +15,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import utility.PMCException;
 
 import java.io.File;
 import java.net.URL;
@@ -36,13 +37,13 @@ public class CreateMovieController implements Initializable {
     private Stage stage;
     private int catId;
 
-    public CreateMovieController(){
+    public CreateMovieController() throws PMCException {
         try {
             movieModel = MovieModel.getInstance();
             catModel = CatModel.getInstance();
             catMovieModel = CatMovieModel.getInstance();
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new PMCException("Could not fetch model instance", e);
         }
     }
 
@@ -52,7 +53,7 @@ public class CreateMovieController implements Initializable {
         choiceBoxFirst.setOnAction(this::getSelectedCategory);
     }
 
-    public void clickCreate(ActionEvent actionEvent) {
+    public void clickCreate(ActionEvent actionEvent) throws PMCException {
         try {
             String fullpath = btnFilePath.getText();
             String relativePath = getRelativePath(fullpath);
@@ -69,7 +70,7 @@ public class CreateMovieController implements Initializable {
 
             stage.close();
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new PMCException("Could not create movie", e);
         }
     }
 

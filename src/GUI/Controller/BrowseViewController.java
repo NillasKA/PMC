@@ -16,6 +16,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import utility.PMCException;
 
 import java.io.IOException;
 import java.net.URL;
@@ -45,13 +46,13 @@ public class BrowseViewController implements Initializable {
     private TableColumn<Movie, String> colFileLink = new TableColumn<>();
 
 
-    public BrowseViewController() {
+    public BrowseViewController() throws PMCException {
         try {
             movieModel = MovieModel.getInstance();
             catMovieModel = CatMovieModel.getInstance();
             catModel = CatModel.getInstance();
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new PMCException("could not get Model instances", e);
         }
     }
 
@@ -65,7 +66,7 @@ public class BrowseViewController implements Initializable {
         tblMovies.setEditable(true);
     }
 
-    public void clickCreate(ActionEvent actionEvent) {
+    public void clickCreate(ActionEvent actionEvent) throws PMCException {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/CreateMovieView.fxml"));
             Parent newWindow = loader.load();
@@ -78,30 +79,30 @@ public class BrowseViewController implements Initializable {
             controller.setStage(stage);
             stage.showAndWait();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new PMCException("Could not load new Stage", e);
         }
     }
 
-    public void clickDelete(ActionEvent actionEvent) {
+    public void clickDelete(ActionEvent actionEvent) throws PMCException {
         try {
             movieModel.delete(movieModel.getCurrentMovie());
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new PMCException("Could not delete Movie",e);
         }
     }
 
-    public void clickAddToCat(ActionEvent actionEvent) {
+    public void clickAddToCat(ActionEvent actionEvent) throws PMCException {
         try {
             //Gets the current movie and category, and retrieves their id's.
             CatMovie catMovie = new CatMovie(catModel.getCategory().getId(),
                     movieModel.getCurrentMovie().getId());
             catMovieModel.create(catMovie);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new PMCException("Could not add to the specific Category",e);
         }
     }
 
-    public void clickPlay(ActionEvent actionEvent) {
+    public void clickPlay(ActionEvent actionEvent) throws PMCException {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/PlayMovie.fxml"));
             Parent newWindow = loader.load();
@@ -114,7 +115,7 @@ public class BrowseViewController implements Initializable {
             controller.setStage(stage);
             stage.showAndWait();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new PMCException("Could not play movie", e);
         }
     }
 

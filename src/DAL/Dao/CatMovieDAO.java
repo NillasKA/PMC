@@ -5,6 +5,7 @@ import BE.Movie;
 import DAL.DatabaseConnector;
 import DAL.ICatMovieDataAccess;
 import com.microsoft.sqlserver.jdbc.SQLServerException;
+import utility.PMCException;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -14,12 +15,12 @@ public class CatMovieDAO implements ICatMovieDataAccess {
 
     private DatabaseConnector dbConnector;
 
-    public CatMovieDAO() throws Exception{
+    public CatMovieDAO() throws PMCException{
         dbConnector = new DatabaseConnector();
     }
 
     @Override
-    public List<CatMovie> getAll() throws Exception {
+    public List<CatMovie> getAll() throws PMCException {
         ArrayList<CatMovie> allCatMovies = new ArrayList<>();
 
         try(Connection conn = dbConnector.getConnection();
@@ -42,11 +43,11 @@ public class CatMovieDAO implements ICatMovieDataAccess {
         catch (SQLException sqlEx)
         {
             sqlEx.printStackTrace();
-            throw new Exception("Could not get CatMovies from database", sqlEx);
+            throw new PMCException("Could not get CatMovies from database", sqlEx);
         }
     }
 
-    public int getMoviesCountForCategory(int categoryId) throws Exception
+    public int getMoviesCountForCategory(int categoryId) throws PMCException
     {
         String sql = "SELECT COUNT(*) FROM dbo.CatMovie WHERE CategoryId = ?";
         try(Connection conn = dbConnector.getConnection();
@@ -65,12 +66,12 @@ public class CatMovieDAO implements ICatMovieDataAccess {
         catch (SQLException ex)
         {
             ex.printStackTrace();
-            throw new Exception("Could not get moviecount");
+            throw new PMCException("Could not get moviecount");
         }
     }
 
     @Override
-    public CatMovie create(CatMovie catMovie) throws SQLServerException {
+    public CatMovie create(CatMovie catMovie) throws PMCException {
         String sql = "INSERT INTO dbo.CatMovie (CategoryId, MovieId) VALUES (?,?);";
 
         try(Connection conn = dbConnector.getConnection();
@@ -87,12 +88,12 @@ public class CatMovieDAO implements ICatMovieDataAccess {
 
         }
         catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new PMCException("Could not create CatMovie entity", e);
         }
     }
 
     @Override
-    public void update(CatMovie catMovie) throws Exception {
+    public void update(CatMovie catMovie) throws PMCException {
         String sql = "UPDATE dbo.CatMovie SET CategoryId = ?, MovieId = ? WHERE id = ?;";
 
         try(Connection conn = dbConnector.getConnection();
@@ -107,11 +108,11 @@ public class CatMovieDAO implements ICatMovieDataAccess {
         catch (SQLException sqlEx)
         {
             sqlEx.printStackTrace();
-            throw new Exception("Could not update catMovie", sqlEx);
+            throw new PMCException("Could not update catMovie", sqlEx);
         }
     }
 
-    public void delete(CatMovie catMovie) throws Exception
+    public void delete(CatMovie catMovie) throws PMCException
     {
         String sql = "DELETE FROM dbo.CatMovie WHERE CategoryId = ? AND MovieId = ?;";
 
@@ -128,18 +129,18 @@ public class CatMovieDAO implements ICatMovieDataAccess {
         catch (SQLException ex)
         {
             ex.printStackTrace();
-            throw new Exception("Could not delete CatMovie", ex);
+            throw new PMCException("Could not delete CatMovie", ex);
         }
     }
 
     //UNSURE IF WE NEED THIS OR NOT - FOR NOW ITS NULL
     @Override
-    public CatMovie getById(int catMovieId) throws Exception {
+    public CatMovie getById(int catMovieId) throws PMCException {
         return null;
     }
 
     @Override
-    public List<Movie> getMovieByCatId(int catId) throws Exception {
+    public List<Movie> getMovieByCatId(int catId) throws PMCException {
         List<Movie> movies = new ArrayList<>();
         String sql = "SELECT Movie.* FROM dbo.Movie " + "JOIN CatMovie ON Movie.Id = CatMovie.MovieId " + "WHERE CatMovie.CategoryId = ?;";
         try(Connection conn = dbConnector.getConnection();
@@ -161,6 +162,10 @@ public class CatMovieDAO implements ICatMovieDataAccess {
                     movies.add(movie);
                 }
             }
+        }
+        catch(SQLException ex)
+        {
+            throw new PMCException("could not get Movie by its Category ID", ex);
         }
         return movies;
     }

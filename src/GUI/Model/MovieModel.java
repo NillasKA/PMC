@@ -4,6 +4,7 @@ import BE.Movie;
 import BLL.MovieManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import utility.PMCException;
 
 import java.util.List;
 
@@ -13,13 +14,13 @@ public class MovieModel {
     private MovieManager movieManager;
     private ObservableList<Movie> allMovies;
 
-    public MovieModel() throws Exception {
+    public MovieModel() throws PMCException {
         movieManager = new MovieManager();
         allMovies = FXCollections.observableArrayList();
         allMovies.addAll(movieManager.getAll());
     }
 
-    public static MovieModel getInstance() throws Exception {
+    public static MovieModel getInstance() throws PMCException {
         if(instance == null)
         {
             instance = new MovieModel();
@@ -32,36 +33,36 @@ public class MovieModel {
         return allMovies;
     }
 
-    public List<Movie> getAll() throws Exception {
+    public List<Movie> getAll() throws PMCException {
         return movieManager.getAll();
     }
 
-    public Movie create(Movie movie) throws Exception {
+    public Movie create(Movie movie) throws PMCException {
         allMovies.add(movie);
         return movieManager.create(movie);
     }
 
-    public void update(Movie movie) throws Exception {
+    public void update(Movie movie) throws PMCException {
         movieManager.update(movie);
     }
 
-    public void delete(Movie movie) throws Exception {
+    public void delete(Movie movie) throws PMCException {
         movieManager.delete(movie);
         allMovies.remove(movie);
     }
 
-    public void searchMovie(String query) throws Exception
+    public void searchMovie(String query) throws PMCException
     {
         List<Movie> searchResults = movieManager.searchMovie(query);
         allMovies.clear();
         allMovies.addAll(searchResults);
     }
 
-    public List<Movie> getByCatId(int catId) throws Exception {
+    public List<Movie> getByCatId(int catId) throws PMCException {
         return movieManager.getByCatId(catId);
     }
 
-    public Movie getById(int movieId) throws Exception {
+    public Movie getById(int movieId) throws PMCException {
         return movieManager.getById(movieId);
     }
 

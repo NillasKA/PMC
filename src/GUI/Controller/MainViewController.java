@@ -20,6 +20,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import utility.PMCException;
 
 import java.io.IOException;
 import java.net.URL;
@@ -41,17 +42,17 @@ public class MainViewController implements Initializable {
     @FXML
     private TableColumn<Category, String> colMovies;
 
-    public MainViewController(){
+    public MainViewController() throws PMCException {
         try {
             catModel = CatModel.getInstance();
             movieModel = MovieModel.getInstance();
             catMovieModel = CatMovieModel.getInstance();
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new PMCException("Could not fetch model instances", e);
         }
     }
 
-    public void clickBrowse(ActionEvent actionEvent) {
+    public void clickBrowse(ActionEvent actionEvent) throws PMCException {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/BrowseView.fxml"));
             Parent p = loader.load();
@@ -59,11 +60,11 @@ public class MainViewController implements Initializable {
             AnchorPane view = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/BrowseView.fxml")));
             borderPane.setCenter(view);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new PMCException("Could not load browsing window", e);
         }
     }
 
-    public void clickCategory(MouseEvent mouseEvent) {
+    public void clickCategory(MouseEvent mouseEvent) throws PMCException {
         try {
             //Sets the selected category to the model.
             catModel.setCategory(tblCategories.getSelectionModel().getSelectedItem());
@@ -77,11 +78,11 @@ public class MainViewController implements Initializable {
             AnchorPane view = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/CategoryView.fxml")));
             borderPane.setCenter(view);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new PMCException("Could not load movies in category",e);
         }
     }
 
-    public void clickCreate(ActionEvent actionEvent) {
+    public void clickCreate(ActionEvent actionEvent) throws PMCException {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/CreateCategoryView.fxml"));
             Parent newWindow = loader.load();
@@ -97,17 +98,17 @@ public class MainViewController implements Initializable {
             tblCategories.refresh();
         } catch (IOException e) {
             e.printStackTrace();
-            throw new RuntimeException(e);
+            throw new PMCException("Could not load creator window",e);
         }
     }
 
-    public void clickDelete(ActionEvent actionEvent) {
+    public void clickDelete(ActionEvent actionEvent) throws PMCException {
         try {
             Category cat = tblCategories.getSelectionModel().getSelectedItem();
             catModel.delete(cat);
             tblCategories.refresh();
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new PMCException("Could not delete category",e);
         }
     }
 

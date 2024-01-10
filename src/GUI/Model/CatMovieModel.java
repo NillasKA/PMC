@@ -7,6 +7,7 @@ import BLL.CatMovieManager;
 import BLL.MovieManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import utility.PMCException;
 
 import java.util.List;
 
@@ -16,12 +17,12 @@ public class CatMovieModel {
     private ObservableList<Movie> allCatMovies;
     private Category category;
 
-    public CatMovieModel() throws Exception {
+    public CatMovieModel() throws PMCException {
         catMovieManager = new CatMovieManager();
         allCatMovies = FXCollections.observableArrayList();
     }
 
-    public static CatMovieModel getInstance() throws Exception {
+    public static CatMovieModel getInstance() throws PMCException {
         if(instance == null)
         {
             instance = new CatMovieModel();
@@ -34,12 +35,12 @@ public class CatMovieModel {
     so the list is only instanciated when a category has been selected.
     This can be seen in MainViewController in the clickCategory() method.
      */
-    public void initCurrentCat() throws Exception {
+    public void initCurrentCat() throws PMCException {
         allCatMovies.clear();
         allCatMovies.addAll(catMovieManager.getMovieByCatId(getCategory().getId()));
     }
 
-    public List<CatMovie> getAll() throws Exception {
+    public List<CatMovie> getAll() throws PMCException {
         return catMovieManager.getAll();
     }
 
@@ -47,25 +48,25 @@ public class CatMovieModel {
         return allCatMovies;
     }
 
-    public int getMoviesCountForCategory(int categoryId) throws Exception
+    public int getMoviesCountForCategory(int categoryId) throws PMCException
     {
         return catMovieManager.getMoviesCountForCategory(categoryId);
     }
 
-    public CatMovie create(CatMovie catMovie) throws Exception {
+    public CatMovie create(CatMovie catMovie) throws PMCException {
         return catMovieManager.create(catMovie);
     }
 
-    public void update(CatMovie catMovie) throws Exception {
+    public void update(CatMovie catMovie) throws PMCException {
         catMovieManager.update(catMovie);
     }
 
-    public void delete(CatMovie catMovie) throws Exception {
+    public void delete(CatMovie catMovie) throws PMCException {
         catMovieManager.delete(catMovie);
     }
 
     //NOT IMPLEMENTED
-    public CatMovie getById(int catMovieId) throws Exception {
+    public CatMovie getById(int catMovieId) throws PMCException {
         return catMovieManager.getById(catMovieId);
     }
 

@@ -22,6 +22,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.fxml.FXML;
 import javafx.util.Duration;
+import utility.PMCException;
 
 import java.io.File;
 import java.net.URL;
@@ -49,11 +50,11 @@ public class MediaPlayerController implements Initializable {
     private MediaPlayer mediaPlayer;
 
     private boolean isPlayed = false;
-    public MediaPlayerController(){
+    public MediaPlayerController() throws PMCException {
         try {
             movieModel = MovieModel.getInstance();
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new PMCException("Could not fetch model instance", e);
         }
     }
 

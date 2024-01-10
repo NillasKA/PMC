@@ -3,6 +3,7 @@ package DAL.Dao;
 import BE.Category;
 import DAL.DatabaseConnector;
 import DAL.ICatDataAccess;
+import utility.PMCException;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -12,12 +13,12 @@ public class CatDAO implements ICatDataAccess
 {
     private DatabaseConnector dbConnector;
 
-    public CatDAO() throws Exception{
+    public CatDAO() throws PMCException{
         dbConnector = new DatabaseConnector();
     }
 
     @Override
-    public List<Category> getAll() throws Exception {
+    public List<Category> getAll() throws PMCException {
         ArrayList<Category> allCategories = new ArrayList<>();
 
         try(Connection conn = dbConnector.getConnection();
@@ -40,12 +41,13 @@ public class CatDAO implements ICatDataAccess
         catch (SQLException sqlEx)
         {
             sqlEx.printStackTrace();
-            throw new Exception("Could not get categories from database", sqlEx);
+            //sæt logging ind her
+            throw new PMCException("Could not get categories from database", sqlEx);
         }
     }
 
     @Override
-    public Category create(Category category) throws Exception {
+    public Category create(Category category) throws PMCException {
         String sql = "INSERT INTO dbo.Category (Name) VALUES (?)";
 
         try(Connection conn = dbConnector.getConnection();
@@ -70,12 +72,12 @@ public class CatDAO implements ICatDataAccess
         catch (SQLException sqlEx)
         {
             sqlEx.printStackTrace();
-            throw new Exception("Could not create category", sqlEx);
+            throw new PMCException("Could not create category", sqlEx);
         }
     }
 
     @Override
-    public void update(Category category) throws Exception {
+    public void update(Category category) throws PMCException {
         String sql = "UPDATE dbo.Category SET Name = ? WHERE id = ?;";
 
         try(Connection conn = dbConnector.getConnection();
@@ -90,12 +92,12 @@ public class CatDAO implements ICatDataAccess
         catch (SQLException sqlEx)
         {
             sqlEx.printStackTrace();
-            throw new Exception("Could not create category", sqlEx);
+            throw new PMCException("Could not create category", sqlEx);
         }
     }
 
     @Override
-    public void delete(Category category) throws Exception {
+    public void delete(Category category) throws PMCException {
         String sql = "DELETE FROM dbo.Category WHERE id = ?;";
         try(Connection conn = dbConnector.getConnection())
         {
@@ -108,12 +110,12 @@ public class CatDAO implements ICatDataAccess
         catch(SQLException ex)
         {
             ex.printStackTrace();
-            throw new Exception("Could not delete category", ex);
+            throw new PMCException("Could not delete category", ex);
         }
     }
 
     @Override
-    public Category getById(int catId) throws Exception {
+    public Category getById(int catId) throws PMCException {
         String sql = "SELECT * FROM dbo.Category WHERE id = ?;";
         try (Connection conn = dbConnector.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -130,6 +132,11 @@ public class CatDAO implements ICatDataAccess
                 cat = new Category(id, title);
             }
             return cat;
+        }
+        catch(SQLException ex)
+        {
+            ex.printStackTrace();
+            throw new PMCException("Could not get specific category based on ID", ex);
         }
     }
 }

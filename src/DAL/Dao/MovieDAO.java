@@ -3,6 +3,7 @@ package DAL.Dao;
 import BE.Movie;
 import DAL.DatabaseConnector;
 import DAL.IMovieDataAccess;
+import utility.PMCException;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -11,12 +12,12 @@ import java.util.List;
 public class MovieDAO implements IMovieDataAccess {
     private DatabaseConnector dbConnector;
 
-    public MovieDAO() throws Exception{
+    public MovieDAO() throws PMCException{
         dbConnector = new DatabaseConnector();
     }
 
     @Override
-    public List<Movie> getAll() throws Exception {
+    public List<Movie> getAll() throws PMCException {
         ArrayList<Movie> allMovies = new ArrayList<>();
 
         try(Connection conn = dbConnector.getConnection();
@@ -43,12 +44,12 @@ public class MovieDAO implements IMovieDataAccess {
         catch (SQLException sqlEx)
         {
             sqlEx.printStackTrace();
-            throw new Exception("Could not get movies from database", sqlEx);
+            throw new PMCException("Could not get movies from database", sqlEx);
         }
     }
 
     @Override
-    public Movie create(Movie movie) throws Exception {
+    public Movie create(Movie movie) throws PMCException {
         String sql = "INSERT INTO dbo.Movie (Name, Rating, Filelink, Lastview) VALUES (?, ?, ?, ?)";
 
         try(Connection conn = dbConnector.getConnection();
@@ -77,12 +78,12 @@ public class MovieDAO implements IMovieDataAccess {
         catch (SQLException sqlEx)
         {
             sqlEx.printStackTrace();
-            throw new Exception("Could not create movie", sqlEx);
+            throw new PMCException("Could not create movie", sqlEx);
         }
     }
 
     @Override
-    public void update(Movie movie) throws Exception {
+    public void update(Movie movie) throws PMCException {
         String sql = "UPDATE dbo.Movie SET Name = ?, Rating = ?, Filelink = ?, Lastview = ? WHERE id = ?;";
 
         try(Connection conn = dbConnector.getConnection();
@@ -100,12 +101,12 @@ public class MovieDAO implements IMovieDataAccess {
         catch (SQLException sqlEx)
         {
             sqlEx.printStackTrace();
-            throw new Exception("Could not update movie", sqlEx);
+            throw new PMCException("Could not update movie", sqlEx);
         }
     }
 
     @Override
-    public void delete(Movie movie) throws Exception {
+    public void delete(Movie movie) throws PMCException {
         String sql = "DELETE FROM dbo.Movie WHERE id = ?;";
         try(Connection conn = dbConnector.getConnection())
         {
@@ -118,12 +119,12 @@ public class MovieDAO implements IMovieDataAccess {
         catch(SQLException ex)
         {
             ex.printStackTrace();
-            throw new Exception("Could not delete movie", ex);
+            throw new PMCException("Could not delete movie", ex);
         }
     }
 
     @Override
-    public List<Movie> getByCatId(int catId) throws Exception {
+    public List<Movie> getByCatId(int catId) throws PMCException {
         List<Movie> movies = new ArrayList<>();
         String sql = "SELECT Movie.* FROM dbo.Movie " + "JOIN CatMovie ON Movie.Id = CatMovie.MovieId " + "WHERE CatMovie.CategoryId = ?;";
         try(Connection conn = dbConnector.getConnection();
@@ -146,11 +147,15 @@ public class MovieDAO implements IMovieDataAccess {
                 }
             }
         }
+        catch(SQLException ex)
+        {
+            throw new PMCException("Could not get Movie, by specific Category ID", ex);
+        }
         return movies;
     }
 
     @Override
-    public Movie getById(int movieId) throws Exception {
+    public Movie getById(int movieId) throws PMCException {
         String sql = "SELECT * FROM dbo.Movie WHERE id = ?;";
         try (Connection conn = dbConnector.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -170,6 +175,10 @@ public class MovieDAO implements IMovieDataAccess {
                 mov = new Movie(id, name, rating, filelink, lastview);
             }
             return mov;
+        }
+        catch (SQLException ex)
+        {
+            throw new PMCException("Could not get specific movie based on ID", ex);
         }
     }
 }
