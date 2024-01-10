@@ -92,7 +92,9 @@ public class MainViewController implements Initializable {
             CreateCategoryController controller = loader.getController();
             controller.setParentController(this);
             controller.setStage(stage);
+            tblCategories.refresh();
             stage.showAndWait();
+            tblCategories.refresh();
         } catch (IOException e) {
             e.printStackTrace();
             throw new RuntimeException(e);
@@ -100,7 +102,13 @@ public class MainViewController implements Initializable {
     }
 
     public void clickDelete(ActionEvent actionEvent) {
-        //Selection model on movie selected in tableview.
+        try {
+            Category cat = tblCategories.getSelectionModel().getSelectedItem();
+            catModel.delete(cat);
+            tblCategories.refresh();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

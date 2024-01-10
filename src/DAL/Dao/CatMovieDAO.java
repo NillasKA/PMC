@@ -113,7 +113,7 @@ public class CatMovieDAO implements ICatMovieDataAccess {
 
     public void delete(CatMovie catMovie) throws Exception
     {
-        String sql = "DELETE FROM dbo.PlaylistSongs WHERE CategoryId = ? AND MovieId = ?;";
+        String sql = "DELETE FROM dbo.CatMovie WHERE CategoryId = ? AND MovieId = ?;";
 
         try(Connection conn = dbConnector.getConnection())
         {

@@ -37,6 +37,7 @@ public class MovieModel {
     }
 
     public Movie create(Movie movie) throws Exception {
+        allMovies.add(movie);
         return movieManager.create(movie);
     }
 
@@ -46,6 +47,7 @@ public class MovieModel {
 
     public void delete(Movie movie) throws Exception {
         movieManager.delete(movie);
+        allMovies.remove(movie);
     }
 
     public void searchMovie(String query) throws Exception

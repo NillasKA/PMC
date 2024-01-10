@@ -38,6 +38,7 @@ public class CatModel {
     }
 
     public Category create(Category category) throws Exception {
+        allCategories.add(category);
         return catManager.create(category);
     }
 
@@ -47,6 +48,7 @@ public class CatModel {
 
     public void delete(Category category) throws Exception {
         catManager.delete(category);
+        allCategories.remove(category);
     }
 
     public Category getById(int catId) throws Exception {

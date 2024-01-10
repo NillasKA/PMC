@@ -1,5 +1,6 @@
 package GUI.Controller;
 
+import BE.CatMovie;
 import BE.Movie;
 import GUI.Model.CatModel;
 import GUI.Model.CatMovieModel;
@@ -63,5 +64,12 @@ public class CategoryViewController implements Initializable {
     }
 
     public void clickDelete(ActionEvent actionEvent) {
+        try {
+            Movie movie = tblMovies.getSelectionModel().getSelectedItem();
+            CatMovie catMovie = new CatMovie(catModel.getCategory().getId(), movie.getId());
+            catMovieModel.delete(catMovie);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }

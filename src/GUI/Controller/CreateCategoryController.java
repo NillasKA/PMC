@@ -14,7 +14,7 @@ public class CreateCategoryController {
     private Stage stage;
     private MainViewController parentController;
 
-    CatModel catModel;
+    private CatModel catModel;
 
     public CreateCategoryController(){
         try {
