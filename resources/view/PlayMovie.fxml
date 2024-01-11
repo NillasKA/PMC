@@ -28,7 +28,6 @@
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
                <children>
                   <Button mnemonicParsing="false" onAction="#toggleFullscreen" text="Fullscreen" />
-                  <Button mnemonicParsing="false" onAction="#selectMedia" text="Select Media" />
                   <Button fx:id="btnPlay" mnemonicParsing="false" onMouseClicked="#btnPlay" text="Play" />
                   <Button mnemonicParsing="false" onMouseClicked="#btnStop" text="Stop" />
                   <Label fx:id="lblDuration" text="Duration 00 / 00 " />
