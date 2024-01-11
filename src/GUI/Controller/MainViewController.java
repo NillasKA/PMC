@@ -41,6 +41,7 @@ public class MainViewController implements Initializable {
     private TableColumn<Category, String> colCategories;
     @FXML
     private TableColumn<Category, String> colMovies;
+    private Stage stage;
 
     public MainViewController() throws PMCException {
         try {
@@ -134,5 +135,19 @@ public class MainViewController implements Initializable {
         });
 
         tblCategories.setEditable(true);
+    }
+
+    public void setParentController(WarningController warningController) {
+    }
+
+    public void setStage(Stage stage) {
+        this.stage = stage;
+    }
+
+    public void closeStage() {
+        if (stage !=null){
+            stage.close();
+        }
+        
     }
 }

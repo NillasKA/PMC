@@ -21,7 +21,7 @@ public class Main extends Application {
         FXMLLoader loader = new FXMLLoader();
         Parent root = null;
         try {
-            root = loader.load(getClass().getResource("view/mainView.fxml"));
+            root = loader.load(getClass().getResource("view/Warning.fxml"));
         } catch (IOException e) {
             throw new PMCException(e);
         }
