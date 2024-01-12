@@ -3,6 +3,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
 <AnchorPane prefHeight="579.0" prefWidth="678.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.BrowseViewController">
@@ -19,5 +20,6 @@
         <Button layoutX="270.0" layoutY="533.0" mnemonicParsing="false" onAction="#clickPlay" prefHeight="32.0" prefWidth="59.0" text="Play" />
         <Button layoutX="527.0" layoutY="533.0" mnemonicParsing="false" onAction="#clickDelete" prefHeight="32.0" prefWidth="59.0" text="Delete" />
       <Button layoutX="86.0" layoutY="533.0" mnemonicParsing="false" onAction="#clickAddToCat" prefHeight="32.0" prefWidth="116.0" text="Add to Category" />
+      <TextField fx:id="txtMovieSearch" layoutX="359.0" layoutY="537.0" promptText="Search for name, category" />
     </children>
 </AnchorPane>

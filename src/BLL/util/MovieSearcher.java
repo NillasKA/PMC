@@ -28,13 +28,15 @@ public class MovieSearcher {
 
     private boolean compareToRating(String query, Movie movie)
     {
-        double queryAsNumber = Double.parseDouble(query);
+        try {
+            double queryAsNumber = Double.parseDouble(query);
 
-        if(queryAsNumber == movie.getRating() || queryAsNumber < movie.getRating())
-        {
-            return true;
-        }
-        else
+            if (queryAsNumber == movie.getRating() || queryAsNumber < movie.getRating()) {
+                return true;
+            } else {
+                return false;
+            }
+        }catch (NumberFormatException e)
         {
             return false;
         }

@@ -13,6 +13,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
@@ -32,6 +33,9 @@ public class BrowseViewController implements Initializable {
 
     @FXML
     private TableView<Movie> tblMovies;
+
+    @FXML
+    private TextField txtMovieSearch;
 
     @FXML
     private TableColumn<Movie, String> colRating = new TableColumn<>();
@@ -64,6 +68,8 @@ public class BrowseViewController implements Initializable {
         //colLastViewed.setCellValueFactory(new PropertyValueFactory<>("lastviewed"));
         colFileLink.setCellValueFactory(new PropertyValueFactory<>("filelink"));
         tblMovies.setEditable(true);
+
+        search();
     }
 
     public void clickCreate(ActionEvent actionEvent) throws PMCException {
@@ -121,6 +127,21 @@ public class BrowseViewController implements Initializable {
 
     public void setMovie(MouseEvent mouseEvent) {
         movieModel.setMovie(tblMovies.getSelectionModel().getSelectedItem());
+    }
+
+    public void search()
+    {
+        txtMovieSearch.textProperty().addListener((observable, oldValue, newValue) ->
+        {
+            try
+            {
+                movieModel.searchMovie(newValue);
+            }
+            catch (PMCException e)
+            {
+                e.printStackTrace();
+            }
+        });
     }
 
 }
