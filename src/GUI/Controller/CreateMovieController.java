@@ -9,14 +9,12 @@ import GUI.Model.MovieModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import utility.PMCException;
 
+import javax.swing.*;
 import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -36,6 +34,7 @@ public class CreateMovieController implements Initializable {
     private CatMovieModel catMovieModel;
     private Stage stage;
     private int catId;
+    private String filepath;
 
     public CreateMovieController() throws PMCException {
         try {
@@ -55,20 +54,18 @@ public class CreateMovieController implements Initializable {
 
     public void clickCreate(ActionEvent actionEvent) throws PMCException {
         try {
-            String fullpath = btnFilePath.getText();
-            String relativePath = getRelativePath(fullpath);
+            if (filepath != null){
+                Movie movie = new Movie(-1, txtName.getText(), Double.parseDouble(txtRating.getText()),
+                        filepath, "never");
 
-            Movie movie = new Movie(-1, txtName.getText(), Double.parseDouble(txtRating.getText()),
-                    relativePath, "never");
-
-            movieModel.create(movie);
-            //Puts the movie into the selected category.
-            if(choiceBoxFirst.getItems() != null) {
-                CatMovie catMovie = new CatMovie(catId, movieModel.getAll().getLast().getId()); //This because otherwise -1 would be movie ID. Wouldnt work.
-                catMovieModel.create(catMovie);
+                movieModel.create(movie);
+                //Puts the movie into the selected category.
+                if(choiceBoxFirst.getItems() != null) {
+                    CatMovie catMovie = new CatMovie(catId, movieModel.getAll().getLast().getId()); //This because otherwise -1 would be movie ID. Wouldnt work.
+                    catMovieModel.create(catMovie);
+                }
+                stage.close();
             }
-
-            stage.close();
         } catch (Exception e) {
             throw new PMCException("Could not create movie", e);
         }
@@ -83,9 +80,14 @@ public class CreateMovieController implements Initializable {
         fileChooser.setInitialDirectory(new File(System.getProperty("user.dir") + File.separator + "data"));
         File selectedFile = fileChooser.showOpenDialog(new Stage());
 
-        if (selectedFile != null) {
+        if(selectedFile.getName().contains(".mp4") || selectedFile.getName().contains(".mpeg4") && selectedFile != null){
             // Set the selected file path to the button text.
             btnFilePath.setText(getRelativePath(selectedFile.getPath()));
+            filepath = getRelativePath(selectedFile.getPath());
+        }
+        else {
+            btnFilePath.setText("WRONG FILE FORMAT");
+            warning();
         }
     }
 
@@ -97,6 +99,13 @@ public class CreateMovieController implements Initializable {
         else {
             return fullPath;
         }
+    }
+
+    public void warning(){
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Warning");
+        alert.setContentText("Could not create a movie, check the file format. Only .mp4 and .mpeg4 is allowed.");
+        alert.showAndWait();
     }
 
     public void getSelectedCategory(ActionEvent event) {
