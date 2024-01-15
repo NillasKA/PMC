@@ -3,6 +3,7 @@ package GUI.Controller;
 import BE.CatMovie;
 import BE.Category;
 import BE.Movie;
+import GUI.Model.APIModel;
 import GUI.Model.CatModel;
 import GUI.Model.CatMovieModel;
 import GUI.Model.MovieModel;
@@ -12,13 +13,17 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.util.StringConverter;
+import org.controlsfx.control.textfield.AutoCompletionBinding;
+import org.controlsfx.control.textfield.TextFields;
 import utility.PMCException;
 
-import javax.swing.*;
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class CreateMovieController implements Initializable {
@@ -34,6 +39,7 @@ public class CreateMovieController implements Initializable {
     private MovieModel movieModel;
     private CatModel catModel;
     private CatMovieModel catMovieModel;
+    private APIModel apiModel;
     private Stage stage;
     private int catId;
     private String filepath;
@@ -43,6 +49,8 @@ public class CreateMovieController implements Initializable {
             movieModel = MovieModel.getInstance();
             catModel = CatModel.getInstance();
             catMovieModel = CatMovieModel.getInstance();
+            apiModel = APIModel.getInstance();
+
         } catch (Exception e) {
             throw new PMCException("Could not fetch model instance", e);
         }
@@ -50,8 +58,33 @@ public class CreateMovieController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        choiceBoxFirst.getItems().addAll(catModel.getObservableCategories());
-        choiceBoxFirst.setOnAction(this::getSelectedCategory);
+        try {
+            choiceBoxFirst.getItems().addAll(catModel.getObservableCategories());
+            choiceBoxFirst.setOnAction(this::getSelectedCategory);
+            autoComplete();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void autoComplete() throws IOException, InterruptedException {
+        txtName.textProperty().addListener((observable, oldValue, newValue) -> {
+            try {
+                String searchResult = apiModel.search(txtName.getText());
+                List<Movie> movies = apiModel.getMovies(searchResult);
+
+                AutoCompletionBinding<Movie> autoCompletionBinding = TextFields.bindAutoCompletion(txtName, movies);
+
+                autoCompletionBinding.setOnAutoCompleted(
+                        e -> txtRating.setText(String.valueOf(e.getCompletion().getRating())));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 
     public void clickCreate(ActionEvent actionEvent) throws PMCException {

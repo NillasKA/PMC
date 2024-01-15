@@ -1,6 +1,7 @@
 import BE.CatMovie;
 import BE.Category;
 import BE.Movie;
+import BLL.APIManager;
 import GUI.Model.CatModel;
 import GUI.Model.CatMovieModel;
 import GUI.Model.MovieModel;
@@ -15,9 +16,10 @@ import java.io.IOException;
 import java.util.List;
 
 public class Main extends Application {
+    APIManager apiManager = new APIManager();
 
-    public void start(Stage primaryStage) throws PMCException
-    {
+
+    public void start(Stage primaryStage) throws PMCException, IOException, InterruptedException {
         FXMLLoader loader = new FXMLLoader();
         Parent root = null;
         try {
@@ -29,6 +31,7 @@ public class Main extends Application {
         primaryStage.setTitle("Private Movie Collection");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
+
     }
 
     public static void main(String[] args) throws PMCException {

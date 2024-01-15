@@ -1,9 +1,13 @@
 package BE;
 
+import java.math.RoundingMode;
+import java.math.BigDecimal;
+
 public class Movie {
     private String name;
     private String filelink;
     private String lastview;
+    private String year;
     private double rating;
     private int id;
 
@@ -13,9 +17,9 @@ public class Movie {
      * @param name - Name of the movie.
      * @param rating - Movies IMDB rating. Perhaps personal rating in the future
      * @param filelink - Filepath of the movie. Data/movies/xxxx
-     * @param lastview - Last time the movie was viewed. Check comment in constructor
+     * @param year - Last time the movie was viewed. Check comment in constructor
      */
-    public Movie(int id, String name, double rating, String filelink, String lastview){
+    public Movie(int id, String name, double rating, String filelink, String year){
         this.id = id;
         setName(name);
         setRating(rating);
@@ -26,7 +30,8 @@ public class Movie {
         sets the lastview to the current date. Limitations are of course if the user put in the movie
         a few days after they watched it, it wouldnt be accurate.
          */
-        setLastview(lastview);
+        setYear(year);
+        setLastview("never");
     }
 
     public String getName(){
@@ -48,10 +53,19 @@ public class Movie {
     public int getId(){
         return id;
     }
+    public String getYear() {
+        return year;
+    }
 
     //TODO Implement safety measure
     public void setName(String name){
         this.name = name;
+    }
+
+    public void setYear(String year){
+        String actualYear = year.substring(0, 4);
+
+        this.year = actualYear;
     }
 
     //TODO Implement safety measure
@@ -71,19 +85,17 @@ public class Movie {
         this.filelink = filelink;
     }
 
-    //TODO Implement safety measure
-    private void setRating(Double rating) {
-        this.rating = rating;
+    private void setRating(double rating) {
+        int decimalPlaces = 1;
+
+        BigDecimal bigDecimal = new BigDecimal(rating);
+        bigDecimal = bigDecimal.setScale(decimalPlaces, RoundingMode.HALF_UP);
+
+        this.rating = bigDecimal.doubleValue();
     }
 
     @Override
     public String toString() {
-        return "Movie{" +
-                "name='" + name + '\'' +
-                ", filelink='" + filelink + '\'' +
-                ", lastview='" + lastview + '\'' +
-                ", rating=" + rating +
-                ", id=" + id +
-                '}';
+        return name + " (" + year + ")";
     }
 }
