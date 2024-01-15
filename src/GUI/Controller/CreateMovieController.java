@@ -17,6 +17,8 @@ import utility.PMCException;
 import javax.swing.*;
 import java.io.File;
 import java.net.URL;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ResourceBundle;
 
 public class CreateMovieController implements Initializable {
@@ -71,7 +73,7 @@ public class CreateMovieController implements Initializable {
         }
     }
 
-    public void clickMovieFile(ActionEvent actionEvent) {
+    public void clickMovieFile(ActionEvent actionEvent) throws PMCException {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Choose a File");
 
@@ -91,13 +93,17 @@ public class CreateMovieController implements Initializable {
         }
     }
 
-    private String getRelativePath(String fullPath) {
-        int indexOfData = fullPath.indexOf("data");
-        if(indexOfData != -1) {
-            return fullPath.substring(indexOfData);
-        }
-        else {
-            return fullPath;
+    private String getRelativePath(String fullPath) throws PMCException {
+        Path fullPathObj = Paths.get(fullPath);
+        Path baseDir = Paths.get(System.getProperty("user.dir"));
+
+        try
+        {
+            Path relativePath = baseDir.relativize(fullPathObj);
+            return relativePath.toString();
+        } catch (IllegalArgumentException e)
+        {
+            throw new PMCException(e);
         }
     }
 
