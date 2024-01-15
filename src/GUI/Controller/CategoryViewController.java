@@ -7,13 +7,18 @@ import GUI.Model.CatMovieModel;
 import GUI.Model.MovieModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 import utility.PMCException;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -59,10 +64,25 @@ public class CategoryViewController implements Initializable {
     }
 
     public void setMovie(MouseEvent mouseEvent) {
+        movieModel.setMovie(tblMovies.getSelectionModel().getSelectedItem());
     }
 
-    public void clickPlay(ActionEvent actionEvent) {
+    public void clickPlay(ActionEvent actionEvent) throws PMCException {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/PlayMovie.fxml"));
+            Parent newWindow = loader.load();
+            Stage stage = new Stage();
+            stage.setTitle("MediaPlayer");
+            stage.setScene(new Scene(newWindow));
+
+            MediaPlayerController controller = loader.getController();
+            controller.setStage(stage);
+            stage.showAndWait();
+        } catch (IOException e) {
+            throw new PMCException("Could not play movie", e);
+        }
     }
+
 
     public void clickDelete(ActionEvent actionEvent) throws PMCException {
         try {

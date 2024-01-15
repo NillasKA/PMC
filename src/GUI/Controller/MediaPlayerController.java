@@ -130,6 +130,7 @@ public class MediaPlayerController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
         Movie movie = movieModel.getCurrentMovie();
         File selectedFile = new File(movie.getFilelink());
 
