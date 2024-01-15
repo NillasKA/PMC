@@ -23,6 +23,7 @@ import javafx.stage.Stage;
 import javafx.fxml.FXML;
 import javafx.util.Duration;
 import utility.PMCException;
+import java.time.LocalDate;
 
 import java.io.File;
 import java.net.URL;
@@ -132,7 +133,16 @@ public class MediaPlayerController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
         Movie movie = movieModel.getCurrentMovie();
+        LocalDate currentDate = LocalDate.now();
+        Movie updatedMovie = new Movie(movie.getId(),movie.getName(), movie.getRating(), movie.getFilelink(), String.valueOf(currentDate.getYear()));
+        try {
+            movieModel.update(updatedMovie);
+        } catch (PMCException e) {
+            throw new RuntimeException(e);
+        }
         File selectedFile = new File(movie.getFilelink());
+        System.out.println(updatedMovie.getYear());
+
 
 
         if(selectedFile != null){
