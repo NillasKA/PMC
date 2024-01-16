@@ -6,6 +6,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import utility.PMCException;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public class MovieModel {
@@ -13,8 +14,10 @@ public class MovieModel {
     private static MovieModel instance;
     private MovieManager movieManager;
     private ObservableList<Movie> allMovies;
-
+    private LocalDate currentDate = LocalDate.now();
+    private int currentYear;
     public MovieModel() throws PMCException {
+        currentYear = currentDate.getYear();
         movieManager = new MovieManager();
         allMovies = FXCollections.observableArrayList();
         allMovies.addAll(movieManager.getAll());
@@ -34,6 +37,13 @@ public class MovieModel {
     }
 
     public List<Movie> getAll() throws PMCException {
+        /*for(Movie movie : allMovies)
+        {
+            if(movie.getLastview() != null && Integer.parseInt(movie.getLastview()) + 2 >= currentYear)
+            {
+                delete(movie);
+            }
+        }*/
         return movieManager.getAll();
     }
 

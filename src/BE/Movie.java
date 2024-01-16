@@ -31,7 +31,7 @@ public class Movie {
         a few days after they watched it, it wouldnt be accurate.
          */
         setYear(year);
-        setLastview("never");
+        setLastview(null);
     }
 
     public String getName(){
