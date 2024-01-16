@@ -93,20 +93,19 @@ public class MediaPlayerController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
         Movie movie = movieModel.getCurrentMovie();
         LocalDate currentDate = LocalDate.now();
-        Movie updatedMovie = new Movie(movie.getId(),movie.getName(), movie.getRating(), movie.getFilelink(), String.valueOf(currentDate.getYear()));
+        Movie updatedMovie = new Movie(movie.getId(), movie.getName(), movie.getRating(), movie.getFilelink(), String.valueOf(currentDate.getYear()));
         try {
             movieModel.update(updatedMovie);
         } catch (PMCException e) {
             throw new RuntimeException(e);
         }
-        //Det er her Stregen bliver lavet om til kolon
+
         File selectedFile = new File(movie.getFilelink());
         System.out.println(updatedMovie.getYear());
 
-        if(selectedFile != null){
+        if (selectedFile != null) {
             String url = selectedFile.toURI().toString();
 
             media = new Media(url);
@@ -116,14 +115,15 @@ public class MediaPlayerController implements Initializable {
 
             mediaPlayer.currentTimeProperty().addListener(((observable, oldValue, newValue) -> {
                 slider.setValue(newValue.toSeconds());
-                lblDuration.setText("Duration: " + (int) slider.getValue() + " / " + (int)media.getDuration().toSeconds());
+                lblDuration.setText("Duration: " + (int) slider.getValue() + " / " + (int) media.getDuration().toSeconds());
             }));
 
-            mediaPlayer.setOnReady(() ->{
+            mediaPlayer.setOnReady(() -> {
                 javafx.util.Duration totalDuration = media.getDuration();
                 slider.setMax(totalDuration.toSeconds());
-                lblDuration.setText("Duration: 00 / " + (int)media.getDuration().toSeconds());
+                lblDuration.setText("Duration: 00 / " + (int) media.getDuration().toSeconds());
             });
+
             volumeSlider.setValue(mediaPlayer.getVolume() * 100); // Set slider value based on initial volume
             volumeSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
                 mediaPlayer.setVolume(newValue.doubleValue() / 100); // Set volume based on slider value
@@ -145,10 +145,6 @@ public class MediaPlayerController implements Initializable {
                         mediaPlayer.stop();
                     }
                 });
-
-                // Bind the dimensions of the MediaView to its parent (scene) dimensions
-                mediaView.fitWidthProperty().bind(mediaView.getScene().widthProperty());
-                mediaView.fitHeightProperty().bind(mediaView.getScene().heightProperty());
 
                 stage.setFullScreen(true);
             });
