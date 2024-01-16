@@ -2,7 +2,6 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
@@ -13,7 +12,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="509.0" prefWidth="296.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.CreateMovieController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="331.0" prefWidth="296.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.CreateMovieController">
     <top>
         <HBox prefHeight="50.0" prefWidth="450.0" BorderPane.alignment="CENTER">
             <children>
@@ -41,7 +40,7 @@
         </HBox>
     </bottom>
     <center>
-        <GridPane prefHeight="185.0" prefWidth="296.0" BorderPane.alignment="CENTER">
+        <GridPane prefHeight="117.0" prefWidth="296.0" BorderPane.alignment="CENTER">
             <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="321.0" minWidth="10.0" prefWidth="122.0" />
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="321.0" minWidth="10.0" prefWidth="21.0" />
@@ -51,9 +50,7 @@
                 <RowConstraints maxHeight="144.0" minHeight="10.0" prefHeight="48.0" vgrow="SOMETIMES" />
                 <RowConstraints maxHeight="140.0" minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="182.0" minHeight="10.0" prefHeight="57.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="228.0" minHeight="10.0" prefHeight="54.0" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="260.0" minHeight="10.0" prefHeight="57.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="260.0" minHeight="10.0" prefHeight="131.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
                 <TextField fx:id="txtName" prefHeight="28.0" prefWidth="80.0" promptText="Movie Name" GridPane.columnIndex="2">
@@ -90,24 +87,11 @@
                   <Insets left="20.0" />
                </GridPane.margin>
             </Label>
-            <Label prefHeight="45.0" prefWidth="296.0" text="Last Viewed" GridPane.rowIndex="3">
-               <font>
-                  <Font size="16.0" />
-               </font>
-               <GridPane.margin>
-                  <Insets left="20.0" />
-               </GridPane.margin>
-            </Label>
             <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
                <children>
                   <Button fx:id="btnFilePath" layoutX="20.0" layoutY="14.0" mnemonicParsing="false" onAction="#clickMovieFile" prefHeight="28.0" prefWidth="108.0" text="Add movie" />
                </children>
             </Pane>
-            <Label fx:id="lblLastViewed" alignment="CENTER" prefHeight="45.0" prefWidth="296.0" text="Last Viewed" GridPane.columnIndex="2" GridPane.rowIndex="3">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Label>
             <Label alignment="CENTER" prefHeight="45.0" prefWidth="296.0" text=":" GridPane.columnIndex="1">
                <font>
                   <Font size="16.0" />
@@ -123,17 +107,7 @@
                   <Font size="16.0" />
                </font>
             </Label>
-            <Label alignment="CENTER" prefHeight="45.0" prefWidth="296.0" text=":" GridPane.columnIndex="1" GridPane.rowIndex="3">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Label>
-            <ChoiceBox fx:id="choiceBoxFirst" accessibleRole="CHECK_BOX" prefHeight="25.0" prefWidth="138.0" GridPane.columnIndex="2" GridPane.rowIndex="4">
-               <GridPane.margin>
-                  <Insets left="20.0" right="20.0" />
-               </GridPane.margin>
-            </ChoiceBox>
-            <Label prefHeight="49.0" prefWidth="100.0" text="Category" GridPane.rowIndex="4">
+            <Label prefHeight="49.0" prefWidth="100.0" text="Categories" GridPane.rowIndex="3">
                <GridPane.margin>
                   <Insets left="20.0" />
                </GridPane.margin>
@@ -141,9 +115,14 @@
                   <Font size="16.0" />
                </font>
             </Label>
-            <Label alignment="CENTER" prefHeight="39.0" prefWidth="18.0" text=":" GridPane.columnIndex="1" GridPane.rowIndex="4">
+            <Label alignment="CENTER" prefHeight="39.0" prefWidth="18.0" text=":" GridPane.columnIndex="1" GridPane.rowIndex="3">
                <font>
                   <Font size="16.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblCategories" alignment="CENTER" prefHeight="65.0" prefWidth="157.0" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="2" GridPane.rowIndex="3">
+               <font>
+                  <Font size="14.0" />
                </font>
             </Label>
             </children>

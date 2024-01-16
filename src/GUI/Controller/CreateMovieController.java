@@ -33,9 +33,7 @@ public class CreateMovieController implements Initializable {
     @FXML
     private TextField txtName, txtRating;
     @FXML
-    private Label lblLastViewed;
-    @FXML
-    private ChoiceBox<Category> choiceBoxFirst;
+    private Label lblCategories;
     private BrowseViewController parentController;
     private MovieModel movieModel;
     private CatModel catModel;
@@ -60,8 +58,6 @@ public class CreateMovieController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
-            choiceBoxFirst.getItems().addAll(catModel.getObservableCategories());
-            choiceBoxFirst.setOnAction(this::getSelectedCategory);
             autoComplete();
         } catch (PMCException e) {
 
@@ -80,6 +76,7 @@ public class CreateMovieController implements Initializable {
                         e -> {
                             movieModel.setMovie(e.getCompletion());
                             txtRating.setText(String.valueOf(e.getCompletion().getRating()));
+                            lblCategories.setText(apiModel.getCategories(e.getCompletion().getTMDBId()).toString());
                         });
             } catch (RuntimeException | PMCException e) {}});
     }
@@ -172,11 +169,6 @@ public class CreateMovieController implements Initializable {
         alert.setTitle("Warning");
         alert.setContentText("Could not create a movie, check the file format. Only .mp4 and .mpeg4 is allowed.");
         alert.showAndWait();
-    }
-
-    public void getSelectedCategory(ActionEvent event) {
-        Category cat = choiceBoxFirst.getValue();
-        catId = cat.getId();
     }
 
     public void clickCancel(ActionEvent actionEvent) {
