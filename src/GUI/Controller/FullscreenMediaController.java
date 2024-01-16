@@ -8,7 +8,7 @@ import javafx.scene.media.MediaView;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
-public class FullscreenMedia extends Application {
+public class FullscreenMediaController extends Application {
 
     private double normalWidth;
     private double normalHeight;
