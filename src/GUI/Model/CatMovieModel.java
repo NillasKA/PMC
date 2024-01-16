@@ -14,11 +14,15 @@ import java.util.List;
 public class CatMovieModel {
     private static CatMovieModel instance;
     private CatMovieManager catMovieManager;
+    private MovieModel movieModel;
+    private CatModel catModel;
     private ObservableList<Movie> allCatMovies;
     private Category category;
 
     public CatMovieModel() throws PMCException {
         catMovieManager = new CatMovieManager();
+        movieModel = MovieModel.getInstance();
+        catModel = CatModel.getInstance();
         allCatMovies = FXCollections.observableArrayList();
     }
 
@@ -37,14 +41,14 @@ public class CatMovieModel {
      */
     public void initCurrentCat() throws PMCException {
         allCatMovies.clear();
-        allCatMovies.addAll(catMovieManager.getMovieByCatId(getCategory().getId()));
+        allCatMovies.addAll(catMovieManager.getMovieByCatId(catModel.getCategory().getId()));
     }
 
     public List<CatMovie> getAll() throws PMCException {
         return catMovieManager.getAll();
     }
 
-    public ObservableList<Movie> getObservableCatMovies(int catId) throws Exception {
+    public ObservableList<Movie> getObservableCatMovies() throws Exception {
         return allCatMovies;
     }
 
@@ -54,6 +58,8 @@ public class CatMovieModel {
     }
 
     public CatMovie create(CatMovie catMovie) throws PMCException {
+        System.out.println("last CATMOVIE CREATION = " + movieModel.getAll().getLast().getName());
+        allCatMovies.add(movieModel.getAll().getLast());
         return catMovieManager.create(catMovie);
     }
 
@@ -63,18 +69,11 @@ public class CatMovieModel {
 
     public void delete(CatMovie catMovie) throws PMCException {
         catMovieManager.delete(catMovie);
+        allCatMovies.remove(movieModel.getCurrentMovie());
     }
 
     //NOT IMPLEMENTED
     public CatMovie getById(int catMovieId) throws PMCException {
         return catMovieManager.getById(catMovieId);
-    }
-
-    public void setCategory(Category category){
-        this.category = category;
-    }
-
-    public Category getCategory(){
-        return category;
     }
 }

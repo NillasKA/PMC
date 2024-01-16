@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -76,28 +77,59 @@ public class CreateMovieController implements Initializable {
                 AutoCompletionBinding<Movie> autoCompletionBinding = TextFields.bindAutoCompletion(txtName, movies);
 
                 autoCompletionBinding.setOnAutoCompleted(
-                        e -> txtRating.setText(String.valueOf(e.getCompletion().getRating())));
-            } catch (RuntimeException | PMCException e) {
-            }
-        });
+                        e -> {
+                            movieModel.setMovie(e.getCompletion());
+                            txtRating.setText(String.valueOf(e.getCompletion().getRating()));
+                        });
+            } catch (RuntimeException | PMCException e) {}});
     }
 
     public void clickCreate(ActionEvent actionEvent) throws PMCException {
         try {
             if (filepath != null){
-                Movie movie = new Movie(-1, txtName.getText(), Double.parseDouble(txtRating.getText()),
+                Movie movie = new Movie(-1, movieModel.getCurrentMovie().getTMDBId(),
+                        txtName.getText(), Double.parseDouble(txtRating.getText()),
                         filepath, "never");
 
                 movieModel.create(movie);
-                //Puts the movie into the selected category.
-                if(choiceBoxFirst.getItems() != null) {
-                    CatMovie catMovie = new CatMovie(catId, movieModel.getAll().getLast().getId()); //This because otherwise -1 would be movie ID. Wouldnt work.
-                    catMovieModel.create(catMovie);
-                }
+                System.out.println("last movie = " + movieModel.getAll().getLast().getId());
+                categoryCreation(movieModel.getAll().getLast());
+
                 stage.close();
             }
         } catch (Exception e) {
             throw new PMCException("Could not create movie", e);
+        }
+    }
+
+    public void categoryCreation(Movie movie) throws PMCException, IOException, InterruptedException {
+        List<Category> allCats = catModel.getAll();
+        List<Category> cats = apiModel.getCategories(movie.getTMDBId());
+
+        // Creates CatMovie, if we already have a category that this movie is a part of.
+        for (Category category : allCats) {
+            for (Category cat : cats) {
+                if (cat.getName().equals(category.getName())) {
+                    CatMovie catMovie = new CatMovie(category.getId(), movie.getId());
+                    catMovieModel.create(catMovie);
+                }
+            }
+        }
+        //Creates a new Category and CatMovie if we dont already have the category this movie is a part of.
+        for (Category cat : cats) {
+            boolean found = false;
+            for (Category category : allCats) {
+                if (cat.getName().equals(category.getName())) {
+                    found = true;
+                }
+            }
+            if (!found) {
+                Category newCat = new Category(-1, cat.getName());
+                catModel.create(newCat);
+
+                CatMovie catMovie = new CatMovie(catModel.getAll().getLast().getId(), movie.getId());
+                catMovieModel.create(catMovie);
+            }
         }
     }
 

@@ -69,7 +69,6 @@ public class MainViewController implements Initializable {
         try {
             //Sets the selected category to the model.
             catModel.setCategory(tblCategories.getSelectionModel().getSelectedItem());
-            catMovieModel.setCategory(tblCategories.getSelectionModel().getSelectedItem());
             catMovieModel.initCurrentCat();
 
             //Loads the movies in the category.

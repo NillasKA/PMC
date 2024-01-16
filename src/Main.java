@@ -20,6 +20,10 @@ public class Main extends Application {
 
 
     public void start(Stage primaryStage) throws PMCException, IOException, InterruptedException {
+        //String search = apiManager.search("Shawshank");
+        //System.out.println(search);
+        //System.out.println(apiManager.getMovieId(search));
+        //System.out.println(apiManager.getCategories(search));
         FXMLLoader loader = new FXMLLoader();
         Parent root = null;
         try {

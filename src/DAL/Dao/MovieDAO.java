@@ -33,9 +33,10 @@ public class MovieDAO implements IMovieDataAccess {
                 Double rating = rs.getDouble("Rating");
                 String filelink = rs.getString("Filelink");
                 String lastview = rs.getString("Lastview");
+                int tmdbId = rs.getInt("TMDBid");
 
 
-                Movie movie = new Movie(id, name, rating, filelink, lastview);
+                Movie movie = new Movie(id, tmdbId, name, rating, filelink, lastview);
                 allMovies.add(movie);
             }
             return allMovies;
@@ -50,7 +51,7 @@ public class MovieDAO implements IMovieDataAccess {
 
     @Override
     public Movie create(Movie movie) throws PMCException {
-        String sql = "INSERT INTO dbo.Movie (Name, Rating, Filelink, Lastview) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO dbo.Movie (Name, Rating, Filelink, Lastview, TMDBid) VALUES (?, ?, ?, ?, ?)";
 
         try(Connection conn = dbConnector.getConnection();
             PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS))
@@ -59,6 +60,7 @@ public class MovieDAO implements IMovieDataAccess {
             stmt.setDouble(2, movie.getRating());
             stmt.setString(3, movie.getFilelink());
             stmt.setString(4, movie.getLastview());
+            stmt.setInt(5,movie.getTMDBId());
 
             stmt.executeUpdate();
 
@@ -69,7 +71,7 @@ public class MovieDAO implements IMovieDataAccess {
                 id = rs.getInt(1);
             }
 
-            Movie newMovie = new Movie(id, movie.getName(), movie.getRating(),
+            Movie newMovie = new Movie(id, movie.getTMDBId(), movie.getName(), movie.getRating(),
                                         movie.getFilelink(), movie.getLastview());
 
             return newMovie;
@@ -141,8 +143,9 @@ public class MovieDAO implements IMovieDataAccess {
                     double rating = rs.getDouble("Rating");
                     String filelink = rs.getString("Filelink");
                     String lastview = rs.getString("Lastview");
+                    int tmdbId = rs.getInt("TMDBid");
 
-                    Movie movie = new Movie(id, name, rating, filelink, lastview);
+                    Movie movie = new Movie(id, tmdbId, name, rating, filelink, lastview);
                     movies.add(movie);
                 }
             }
@@ -171,8 +174,9 @@ public class MovieDAO implements IMovieDataAccess {
                 double rating = rs.getDouble("Rating");
                 String filelink = rs.getString("Filelink");
                 String lastview = rs.getString("Lastview");
+                int tmdbId = rs.getInt("TMDBid");
 
-                mov = new Movie(id, name, rating, filelink, lastview);
+                mov = new Movie(id, tmdbId, name, rating, filelink, lastview);
             }
             return mov;
         }

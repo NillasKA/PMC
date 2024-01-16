@@ -157,8 +157,9 @@ public class CatMovieDAO implements ICatMovieDataAccess {
                     double rating = rs.getDouble("Rating");
                     String filelink = rs.getString("Filelink");
                     String lastview = rs.getString("Lastview");
+                    int tmdbId = rs.getInt("TMDBid");
 
-                    Movie movie = new Movie(id, name, rating, filelink, lastview);
+                    Movie movie = new Movie(id, tmdbId, name, rating, filelink, lastview);
                     movies.add(movie);
                 }
             }

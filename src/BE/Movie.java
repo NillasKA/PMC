@@ -10,26 +10,24 @@ public class Movie {
     private String year;
     private double rating;
     private int id;
+    private int TMDBId;
 
     /**
      * Creates a movie based on the given parameters.
      * @param id - Set this to -1 as default. DB will figure it out
+     * @param TMDBid - The Movie ID from TMDB.
      * @param name - Name of the movie.
-     * @param rating - Movies IMDB rating. Perhaps personal rating in the future
+     * @param rating - Movies TMDB rating. Perhaps personal rating in the future
      * @param filelink - Filepath of the movie. Data/movies/xxxx
      * @param year - Last time the movie was viewed. Check comment in constructor
      */
-    public Movie(int id, String name, double rating, String filelink, String year){
+    public Movie(int id, int TMDBid, String name, double rating, String filelink, String year){
         this.id = id;
+        this.TMDBId = TMDBid;
+
         setName(name);
         setRating(rating);
         setFilelink(filelink);
-        /*
-        An idea we can implement.
-        Lastview is default to "never" - Then when user clicks "play" in our program it
-        sets the lastview to the current date. Limitations are of course if the user put in the movie
-        a few days after they watched it, it wouldnt be accurate.
-         */
         setYear(year);
         setLastview("never");
     }
@@ -52,6 +50,10 @@ public class Movie {
 
     public int getId(){
         return id;
+    }
+
+    public int getTMDBId() {
+        return TMDBId;
     }
     public String getYear() {
         return year;

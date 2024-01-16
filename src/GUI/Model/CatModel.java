@@ -11,11 +11,12 @@ import java.util.List;
 public class CatModel {
     private static CatModel instance;
     private CatManager catManager;
-
+    private MovieModel movieModel;
     private ObservableList<Category> allCategories;
     private Category currentCat;
 
     public CatModel() throws PMCException {
+        movieModel = MovieModel.getInstance();
         catManager = new CatManager();
         allCategories = FXCollections.observableArrayList();
         allCategories.addAll(catManager.getAll());
@@ -39,6 +40,7 @@ public class CatModel {
     }
 
     public Category create(Category category) throws PMCException {
+        System.out.println("last CAT CREATE = " + movieModel.getAll().getLast().getName());
         allCategories.add(category);
         return catManager.create(category);
     }

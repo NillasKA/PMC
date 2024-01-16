@@ -52,7 +52,7 @@ public class CategoryViewController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources){
         try {
-            tblMovies.setItems(catMovieModel.getObservableCatMovies(catModel.getCategory().getId()));
+            tblMovies.setItems(catMovieModel.getObservableCatMovies());
             colRating.setCellValueFactory(new PropertyValueFactory<>("rating"));
             colName.setCellValueFactory(new PropertyValueFactory<>("name"));
             //colLastViewed.setCellValueFactory(new PropertyValueFactory<>("lastviewed"));

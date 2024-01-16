@@ -1,5 +1,6 @@
 package GUI.Model;
 
+import BE.Category;
 import BE.Movie;
 import BLL.APIManager;
 import utility.PMCException;
@@ -23,10 +24,6 @@ public class APIModel {
         return instance;
     }
 
-    public List<Movie> getMovies(String string){
-        return apiManager.getMovies(string);
-    }
-
     public String search(String string) throws PMCException {
         try {
             return apiManager.search(string);
@@ -36,4 +33,13 @@ public class APIModel {
             throw new PMCException(e);
         }
     }
+
+    public List<Movie> getMovies(String string){
+        return apiManager.getMovies(string);
+    }
+
+    public List<Category> getCategories(int movieId) throws IOException, InterruptedException {
+        return apiManager.getCategories(movieId);
+    }
+
 }
