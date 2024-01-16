@@ -27,7 +27,13 @@ public class APIModel {
         return apiManager.getMovies(string);
     }
 
-    public String search(String string) throws IOException, InterruptedException {
-        return apiManager.search(string);
+    public String search(String string) throws PMCException {
+        try {
+            return apiManager.search(string);
+        } catch (IOException e) {
+            throw new PMCException(e);
+        } catch (InterruptedException e) {
+            throw new PMCException(e);
+        }
     }
 }

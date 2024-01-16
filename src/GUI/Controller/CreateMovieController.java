@@ -62,14 +62,12 @@ public class CreateMovieController implements Initializable {
             choiceBoxFirst.getItems().addAll(catModel.getObservableCategories());
             choiceBoxFirst.setOnAction(this::getSelectedCategory);
             autoComplete();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
+        } catch (PMCException e) {
+
         }
     }
 
-    public void autoComplete() throws IOException, InterruptedException {
+    public void autoComplete() throws PMCException {
         txtName.textProperty().addListener((observable, oldValue, newValue) -> {
             try {
                 String searchResult = apiModel.search(txtName.getText());
@@ -79,10 +77,7 @@ public class CreateMovieController implements Initializable {
 
                 autoCompletionBinding.setOnAutoCompleted(
                         e -> txtRating.setText(String.valueOf(e.getCompletion().getRating())));
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
+            } catch (RuntimeException | PMCException e) {
             }
         });
     }
