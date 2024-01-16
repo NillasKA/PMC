@@ -140,6 +140,7 @@ public class MediaPlayerController implements Initializable {
         } catch (PMCException e) {
             throw new RuntimeException(e);
         }
+        //Det er her Stregen bliver lavet om til kolon
         File selectedFile = new File(movie.getFilelink());
         System.out.println(updatedMovie.getYear());
 

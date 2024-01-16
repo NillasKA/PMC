@@ -32,6 +32,7 @@ public class MovieDAO implements IMovieDataAccess {
                 String name = rs.getString("Name");
                 Double rating = rs.getDouble("Rating");
                 String filelink = rs.getString("Filelink");
+                System.out.println(filelink);
                 String lastview = rs.getString("Lastview");
 
 
