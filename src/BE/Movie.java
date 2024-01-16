@@ -28,6 +28,7 @@ public class Movie {
         setRating(rating);
         setFilelink(filelink);
         setYear(year);
+        setLastview("never");
     }
 
     public String getName(){

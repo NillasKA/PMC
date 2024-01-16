@@ -85,8 +85,13 @@ public class CreateMovieController implements Initializable {
     }
 
     public void clickCreate(ActionEvent actionEvent) throws PMCException {
+        if(btnFilePath.getText().contains("｜") || btnFilePath.getText().contains("|"))
+        {
+            warning();
+            return;
+        }
         try {
-            if (filepath != null){
+            if (filepath != null) {
                 Movie movie = new Movie(-1, movieModel.getCurrentMovie().getTMDBId(),
                         txtName.getText(), Double.parseDouble(txtRating.getText()),
                         filepath, "never");
@@ -100,7 +105,8 @@ public class CreateMovieController implements Initializable {
         } catch (Exception e) {
             throw new PMCException("Could not create movie", e);
         }
-    }
+        }
+
 
     public void categoryCreation(Movie movie) throws PMCException, IOException, InterruptedException {
         List<Category> allCats = catModel.getAll();
@@ -170,7 +176,7 @@ public class CreateMovieController implements Initializable {
     public void warning(){
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle("Warning");
-        alert.setContentText("Could not create a movie, check the file format. Only .mp4 and .mpeg4 is allowed.");
+        alert.setContentText("Could not create a movie, check the file format. Only .mp4 and .mpeg4 is allowed. File title cannot contain ｜");
         alert.showAndWait();
     }
 
