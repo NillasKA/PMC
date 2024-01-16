@@ -60,44 +60,6 @@ public class MediaPlayerController implements Initializable {
     }
 
     @FXML
-    void selectMedia(ActionEvent actionEvent) {
-        /*FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Select Media");
-        File selectedFile = fileChooser.showOpenDialog(null);
-
-        if(selectedFile != null){
-            String url = selectedFile.toURI().toString();
-
-            media = new Media(url);
-            mediaPlayer = new MediaPlayer(media);
-
-            mediaView.setMediaPlayer(mediaPlayer);
-
-            mediaPlayer.currentTimeProperty().addListener(((observable, oldValue, newValue) -> {
-                slider.setValue(newValue.toSeconds());
-                lblDuration.setText("Duration: " + (int) slider.getValue() + " / " + (int)media.getDuration().toSeconds());
-            }));
-
-            mediaPlayer.setOnReady(() ->{
-                javafx.util.Duration totalDuration = media.getDuration();
-                slider.setMax(totalDuration.toSeconds());
-                lblDuration.setText("Duration: 00 / " + (int)media.getDuration().toSeconds());
-            });
-
-            Scene scene = mediaView.getScene();
-            mediaView.fitWidthProperty().bind(scene.widthProperty());
-            mediaView.fitWidthProperty().bind(scene.heightProperty());
-
-            //mediaPlayer.setAutoPlay(true);
-
-
-        }
-
-         */
-    }
-
-
-    @FXML
     void btnPlay(MouseEvent mouseEvent) {
 
         if(!isPlayed){
@@ -144,8 +106,6 @@ public class MediaPlayerController implements Initializable {
         File selectedFile = new File(movie.getFilelink());
         System.out.println(updatedMovie.getYear());
 
-
-
         if(selectedFile != null){
             String url = selectedFile.toURI().toString();
 
@@ -168,22 +128,29 @@ public class MediaPlayerController implements Initializable {
             volumeSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
                 mediaPlayer.setVolume(newValue.doubleValue() / 100); // Set volume based on slider value
             });
-            BorderPane borderPane = (BorderPane) mediaView.getParent();
-
-            if (mediaView.getScene() != null) {
-                // Bind the dimensions of the MediaView to its parent (scene) dimensions
-                mediaView.fitWidthProperty().bind(mediaView.getScene().widthProperty());
-                mediaView.fitHeightProperty().bind(mediaView.getScene().heightProperty());
-            }
 
             Platform.runLater(() -> {
                 Stage stage = (Stage) mediaView.getScene().getWindow();
+
+                // Add ChangeListeners to update the MediaView dimensions when the stage is resized
+                stage.widthProperty().addListener((observable, oldValue, newValue) -> {
+                    mediaView.setFitWidth(newValue.doubleValue());
+                });
+                stage.heightProperty().addListener((observable, oldValue, newValue) -> {
+                    mediaView.setFitHeight(newValue.doubleValue());
+                });
 
                 stage.setOnCloseRequest(event -> {
                     if (mediaPlayer != null) {
                         mediaPlayer.stop();
                     }
                 });
+
+                // Bind the dimensions of the MediaView to its parent (scene) dimensions
+                mediaView.fitWidthProperty().bind(mediaView.getScene().widthProperty());
+                mediaView.fitHeightProperty().bind(mediaView.getScene().heightProperty());
+
+                stage.setFullScreen(true);
             });
         }
     }
@@ -193,4 +160,5 @@ public class MediaPlayerController implements Initializable {
         stage.setFullScreen(!stage.isFullScreen());
     }
 }
+
 
