@@ -58,7 +58,7 @@ public class MediaPlayerController implements Initializable {
             throw new PMCException("Could not fetch model instance", e);
         }
     }
-&&
+
     @FXML
     void btnPlay(MouseEvent mouseEvent) {
 
