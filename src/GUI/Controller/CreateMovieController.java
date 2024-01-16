@@ -76,9 +76,12 @@ public class CreateMovieController implements Initializable {
                         e -> {
                             movieModel.setMovie(e.getCompletion());
                             txtRating.setText(String.valueOf(e.getCompletion().getRating()));
-                            lblCategories.setText(apiModel.getCategories(e.getCompletion().getTMDBId()).toString());
+                            try {
+                                lblCategories.setText(apiModel.getCategories(e.getCompletion().getTMDBId()).toString());
+                            } catch (IOException | InterruptedException ex) {
+                            }
                         });
-            } catch (RuntimeException | PMCException e) {}});
+            } catch (RuntimeException |PMCException e) {}});
     }
 
     public void clickCreate(ActionEvent actionEvent) throws PMCException {
