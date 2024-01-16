@@ -24,12 +24,10 @@ public class Movie {
     public Movie(int id, int TMDBid, String name, double rating, String filelink, String year){
         this.id = id;
         this.TMDBId = TMDBid;
-
         setName(name);
         setRating(rating);
         setFilelink(filelink);
         setYear(year);
-        setLastview("never");
     }
 
     public String getName(){

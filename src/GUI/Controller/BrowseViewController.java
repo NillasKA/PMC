@@ -87,7 +87,7 @@ public class BrowseViewController implements Initializable {
         tblMovies.setItems(movieModel.getObservableMovies());
         colRating.setCellValueFactory(new PropertyValueFactory<>("rating"));
         colName.setCellValueFactory(new PropertyValueFactory<>("name"));
-        colLastViewed.setCellValueFactory(new PropertyValueFactory<>("lastview"));
+        colLastViewed.setCellValueFactory(new PropertyValueFactory<>("year"));
         colFileLink.setCellValueFactory(new PropertyValueFactory<>("filelink"));
         tblMovies.setEditable(true);
 
