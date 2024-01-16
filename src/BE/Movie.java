@@ -71,7 +71,7 @@ public class Movie {
     }
 
     //TODO Implement safety measure
-    private void setLastview(String lastview) {
+    public void setLastview(String lastview) {
         /* ROUGH PSUDO CODE OF WHAT I WANT
         this.lastview = "never"
 

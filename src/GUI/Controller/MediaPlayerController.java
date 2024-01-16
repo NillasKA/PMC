@@ -96,15 +96,15 @@ public class MediaPlayerController implements Initializable {
 
         Movie movie = movieModel.getCurrentMovie();
         LocalDate currentDate = LocalDate.now();
-        Movie updatedMovie = new Movie(movie.getId(),movie.getTMDBId(), movie.getName(), movie.getRating(), movie.getFilelink(), String.valueOf(currentDate.getYear()));
+        movie.setLastview(String.valueOf(currentDate.getYear()));
         try {
-            movieModel.update(updatedMovie);
+            movieModel.update(movie);
+            System.out.println(movie.toString());
         } catch (PMCException e) {
             throw new RuntimeException(e);
         }
 
         File selectedFile = new File(movie.getFilelink());
-        System.out.println(updatedMovie.getYear());
 
         if (selectedFile != null) {
             String url = selectedFile.toURI().toString();
