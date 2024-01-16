@@ -69,7 +69,7 @@ public class CategoryViewController implements Initializable {
 
     public void clickPlay(ActionEvent actionEvent) throws PMCException {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/PlayMovie.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/PlayMovieView.fxml"));
             Parent newWindow = loader.load();
             Stage stage = new Stage();
             stage.setTitle("MediaPlayer");
