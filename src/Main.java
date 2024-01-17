@@ -1,7 +1,6 @@
 import BE.CatMovie;
 import BE.Category;
 import BE.Movie;
-import BLL.APIManager;
 import GUI.Model.CatModel;
 import GUI.Model.CatMovieModel;
 import GUI.Model.MovieModel;
@@ -16,14 +15,7 @@ import java.io.IOException;
 import java.util.List;
 
 public class Main extends Application {
-    APIManager apiManager = new APIManager();
-
-
-    public void start(Stage primaryStage) throws PMCException, IOException, InterruptedException {
-        //String search = apiManager.search("Shawshank");
-        //System.out.println(search);
-        //System.out.println(apiManager.getMovieId(search));
-        //System.out.println(apiManager.getCategories(search));
+    public void start(Stage primaryStage) throws PMCException {
         FXMLLoader loader = new FXMLLoader();
         Parent root = null;
         try {

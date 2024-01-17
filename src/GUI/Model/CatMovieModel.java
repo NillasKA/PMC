@@ -4,7 +4,6 @@ import BE.CatMovie;
 import BE.Category;
 import BE.Movie;
 import BLL.CatMovieManager;
-import BLL.MovieManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import utility.PMCException;

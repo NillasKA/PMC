@@ -55,7 +55,7 @@ public class CategoryViewController implements Initializable {
             tblMovies.setItems(catMovieModel.getObservableCatMovies());
             colRating.setCellValueFactory(new PropertyValueFactory<>("rating"));
             colName.setCellValueFactory(new PropertyValueFactory<>("name"));
-            //colLastViewed.setCellValueFactory(new PropertyValueFactory<>("lastviewed"));
+            colLastViewed.setCellValueFactory(new PropertyValueFactory<>("year"));
             colFileLink.setCellValueFactory(new PropertyValueFactory<>("filelink"));
             tblMovies.setEditable(true);
         } catch (Exception e) {

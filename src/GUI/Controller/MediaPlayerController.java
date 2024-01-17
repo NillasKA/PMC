@@ -3,22 +3,16 @@ package GUI.Controller;
 import BE.Movie;
 import GUI.Model.MovieModel;
 import javafx.application.Platform;
-import javafx.beans.InvalidationListener;
-import javafx.beans.Observable;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.input.MouseEvent;
-import javafx.application.Application;
-import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.fxml.FXML;
 import javafx.util.Duration;
@@ -36,10 +30,8 @@ public class MediaPlayerController implements Initializable {
     private MovieModel movieModel;
     @FXML
     private Button btnPlay;
-
     @FXML
     private Label lblDuration;
-
     @FXML
     private MediaView mediaView;
     @FXML
@@ -49,8 +41,8 @@ public class MediaPlayerController implements Initializable {
     @FXML
     private Media media;
     private MediaPlayer mediaPlayer;
-
     private boolean isPlayed = false;
+
     public MediaPlayerController() throws PMCException {
         try {
             movieModel = MovieModel.getInstance();

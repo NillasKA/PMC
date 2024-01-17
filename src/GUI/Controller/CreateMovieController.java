@@ -13,7 +13,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import javafx.util.StringConverter;
 import org.controlsfx.control.textfield.AutoCompletionBinding;
 import org.controlsfx.control.textfield.TextFields;
 import utility.PMCException;
@@ -23,7 +22,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -40,7 +38,6 @@ public class CreateMovieController implements Initializable {
     private CatMovieModel catMovieModel;
     private APIModel apiModel;
     private Stage stage;
-    private int catId;
     private String filepath;
 
     public CreateMovieController() throws PMCException {

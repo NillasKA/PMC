@@ -58,7 +58,6 @@ public class Movie {
         return year;
     }
 
-    //TODO Implement safety measure
     public void setName(String name){
         this.name = name;
     }
@@ -69,19 +68,10 @@ public class Movie {
         this.year = actualYear;
     }
 
-    //TODO Implement safety measure
     public void setLastview(String lastview) {
-        /* ROUGH PSUDO CODE OF WHAT I WANT
-        this.lastview = "never"
-
-        if (hasBeenPlayed) {
-            this.lastview = currentDate
-        }
-         */
         this.lastview = lastview;
     }
 
-    //TODO Implement safety measure
     private void setFilelink(String filelink) {
         this.filelink = filelink;
     }

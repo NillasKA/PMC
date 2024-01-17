@@ -31,10 +31,8 @@ public class MainViewController implements Initializable {
     private CatModel catModel;
     private MovieModel movieModel;
     private CatMovieModel catMovieModel;
-
     @FXML
     private BorderPane borderPane;
-
     @FXML
     private TableView<Category> tblCategories;
     @FXML
