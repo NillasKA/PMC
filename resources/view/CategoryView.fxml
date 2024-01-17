@@ -15,9 +15,7 @@
                 <TableColumn fx:id="colFilelink" prefWidth="142.0" text="File Path" />
             </columns>
         </TableView>
-        <Button layoutX="14.0" layoutY="533.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="59.0" text="Create" />
         <Button layoutX="270.0" layoutY="533.0" mnemonicParsing="false" onAction="#clickPlay" prefHeight="32.0" prefWidth="59.0" text="Play" />
         <Button layoutX="527.0" layoutY="533.0" mnemonicParsing="false" onAction="#clickDelete" prefHeight="32.0" prefWidth="59.0" text="Delete" />
-        <Button layoutX="86.0" layoutY="533.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="116.0" text="Add to Category" />
     </children>
 </AnchorPane>
